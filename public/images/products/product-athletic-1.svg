@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#f0f0f0"/>
+  <text x="200" y="50" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" fill="#333">Running Shoe Model X1</text>
+  <path d="M100,180 C120,150 170,140 200,160 C230,140 280,150 300,180 C250,210 150,210 100,180 Z" fill="#4285f4" stroke="#333" stroke-width="2"/>
+  <path d="M120,180 L110,220 L290,220 L280,180" fill="#4285f4" stroke="#333" stroke-width="2"/>
+  <path d="M200,160 L200,220" stroke="#fff" stroke-width="3" stroke-dasharray="5,5"/>
+  <ellipse cx="150" cy="170" rx="15" ry="5" fill="#fff" stroke="none"/>
+  <ellipse cx="250" cy="170" rx="15" ry="5" fill="#fff" stroke="none"/>
+</svg> 

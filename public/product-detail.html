@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details - WholesaleFootwear</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="logo">
+        <h1>WholesaleFootwear</h1>
+      </div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" data-page="home">Home</a></li>
+          <li><a href="index.html#productsPage" class="active" data-page="products">Products</a></li>
+          <li><a href="index.html#ordersPage" data-page="orders">Orders</a></li>
+          <li><a href="index.html#accountPage" data-page="account">Account</a></li>
+        </ul>
+      </nav>
+      <div class="user-actions">
+        <div class="user-menu" id="userMenu">
+          <span>Welcome, <span id="userName">Guest</span></span>
+          <button id="logoutBtn" class="btn-logout hidden"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+        <div class="auth-buttons" id="authButtons">
+          <button id="loginBtn" class="btn btn-login">Login</button>
+          <button id="registerBtn" class="btn btn-register">Register</button>
+        </div>
+        <div class="cart-icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count" id="cartCount">0</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main>
+    <!-- Product Detail Page -->
+    <section id="productDetailPage" class="page active">
+      <div class="container">
+        <div class="breadcrumbs">
+          <a href="index.html">Home</a> &gt; 
+          <a href="index.html#productsPage">Products</a> &gt; 
+          <span id="productName">Product Name</span>
+        </div>
+        
+        <div class="product-detail">
+          <div class="product-gallery">
+            <div class="main-image">
+              <img id="mainProductImage" src="images/product-placeholder.svg" alt="Product Image">
+            </div>
+            <div class="thumbnail-images" id="thumbnailImages">
+              <div class="thumbnail active" data-image="images/product-placeholder.svg">
+                <img src="images/product-placeholder.svg" alt="Thumbnail 1">
+              </div>
+              <div class="thumbnail" data-image="images/product-placeholder.svg">
+                <img src="images/product-placeholder.svg" alt="Thumbnail 2">
+              </div>
+              <div class="thumbnail" data-image="images/product-placeholder.svg">
+                <img src="images/product-placeholder.svg" alt="Thumbnail 3">
+              </div>
+            </div>
+          </div>
+          
+          <div class="product-info">
+            <h1 id="productDetailName">Premium Athletic Shoes</h1>
+            <div class="product-meta">
+              <span class="product-sku">SKU: <span id="productSku">ATH-001</span></span>
+              <span class="product-category">Category: <span id="productCategory">Athletic</span></span>
+            </div>
+            
+            <div class="product-pricing">
+              <div class="wholesale-price">
+                <span class="price-label">Wholesale Price:</span>
+                <span class="price" id="productPrice">$45.00</span>
+                <span class="per-unit">per pair</span>
+              </div>
+              <div class="volume-discounts">
+                <h3>Volume Discounts:</h3>
+                <ul>
+                  <li>10-49 pairs: $45.00 each</li>
+                  <li>50-99 pairs: $42.50 each</li>
+                  <li>100+ pairs: $40.00 each</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="product-attributes">
+              <div class="attribute">
+                <label for="sizeSelect">Size:</label>
+                <select id="sizeSelect" class="form-control">
+                  <option value="">Select Size</option>
+                  <option value="6">US 6</option>
+                  <option value="7">US 7</option>
+                  <option value="8">US 8</option>
+                  <option value="9">US 9</option>
+                  <option value="10">US 10</option>
+                  <option value="11">US 11</option>
+                  <option value="12">US 12</option>
+                </select>
+              </div>
+              <div class="attribute">
+                <label for="colorSelect">Color:</label>
+                <select id="colorSelect" class="form-control">
+                  <option value="">Select Color</option>
+                  <option value="black">Black</option>
+                  <option value="white">White</option>
+                  <option value="red">Red</option>
+                  <option value="blue">Blue</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="quantity-selector">
+              <label for="quantityInput">Quantity:</label>
+              <div class="quantity-controls">
+                <button class="qty-btn" id="decreaseQty">-</button>
+                <input type="number" id="quantityInput" class="form-control" value="10" min="10" step="1">
+                <button class="qty-btn" id="increaseQty">+</button>
+              </div>
+              <span class="min-qty">Minimum order: 10 pairs</span>
+            </div>
+            
+            <div class="product-actions">
+              <button class="btn btn-primary btn-lg" id="addToCartBtn">
+                <i class="fas fa-cart-plus"></i> Add to Cart
+              </button>
+              <button class="btn btn-outline btn-lg" id="bulkOrderBtn">
+                <i class="fas fa-clipboard-list"></i> Request Bulk Quote
+              </button>
+            </div>
+            
+            <div class="product-availability">
+              <h3>Availability:</h3>
+              <ul>
+                <li><i class="fas fa-check-circle"></i> In Stock: <span id="stockLevel">250</span> pairs</li>
+                <li><i class="fas fa-truck"></i> Ships within 2-3 business days</li>
+                <li><i class="fas fa-globe-americas"></i> Available for international shipping</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="product-tabs">
+          <div class="tabs-header">
+            <button class="tab-btn active" data-tab="description">Description</button>
+            <button class="tab-btn" data-tab="specifications">Specifications</button>
+            <button class="tab-btn" data-tab="shipping">Shipping & Returns</button>
+          </div>
+          <div class="tabs-content">
+            <div class="tab-panel active" id="descriptionTab">
+              <h2>Product Description</h2>
+              <p>These premium athletic shoes are designed for maximum comfort and performance. Featuring advanced cushioning technology and breathable materials, these shoes are perfect for active individuals who demand quality footwear.</p>
+              <p>The durable rubber outsole provides excellent traction on various surfaces, while the lightweight construction ensures all-day comfort for your customers. These shoes are ideal for running, training, and everyday wear.</p>
+              <h3>Key Features:</h3>
+              <ul>
+                <li>Breathable mesh upper for enhanced ventilation</li>
+                <li>Responsive cushioning for improved comfort</li>
+                <li>Durable rubber outsole for excellent traction</li>
+                <li>Lightweight design for all-day wear</li>
+                <li>Available in multiple colors and sizes</li>
+              </ul>
+            </div>
+            <div class="tab-panel" id="specificationsTab">
+              <h2>Product Specifications</h2>
+              <table class="specs-table">
+                <tr>
+                  <th>Material:</th>
+                  <td>Synthetic mesh, rubber</td>
+                </tr>
+                <tr>
+                  <th>Closure:</th>
+                  <td>Lace-up</td>
+                </tr>
+                <tr>
+                  <th>Sole:</th>
+                  <td>Rubber</td>
+                </tr>
+                <tr>
+                  <th>Weight:</th>
+                  <td>Approximately 280g per shoe (size 9)</td>
+                </tr>
+                <tr>
+                  <th>Manufacturing:</th>
+                  <td>Ethically produced in compliance with international labor standards</td>
+                </tr>
+                <tr>
+                  <th>Packaging:</th>
+                  <td>Individual boxes with barcode labeling</td>
+                </tr>
+              </table>
+            </div>
+            <div class="tab-panel" id="shippingTab">
+              <h2>Shipping & Returns</h2>
+              <h3>Shipping Information:</h3>
+              <p>We ship bulk orders worldwide. Standard shipping typically takes 3-7 business days within the United States, and 7-14 business days for international orders.</p>
+              <p>Expedited shipping options are available at checkout for an additional fee.</p>
+              
+              <h3>Bulk Orders:</h3>
+              <p>For orders exceeding 500 pairs, please contact our sales team for special shipping arrangements and additional discounts.</p>
+              
+              <h3>Returns Policy:</h3>
+              <p>We accept returns within 30 days of delivery for products in their original condition and packaging. Defective products can be returned for replacement or refund.</p>
+              <p>To initiate a return, please contact our customer service team with your order details and reason for return.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="related-products">
+          <h2 class="section-title">Related Products</h2>
+          <div class="product-grid" id="relatedProductsGrid">
+            <!-- Related products will be loaded dynamically -->
+            <div class="product-card">
+              <div class="product-image">
+                <img src="images/product-placeholder.svg" alt="Related Product 1">
+              </div>
+              <div class="product-details">
+                <h3>Sports Running Shoes</h3>
+                <p class="product-category">Athletic</p>
+                <p class="product-price">$40.00</p>
+                <button class="btn btn-primary">View Details</button>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image">
+                <img src="images/product-placeholder.svg" alt="Related Product 2">
+              </div>
+              <div class="product-details">
+                <h3>Fitness Training Shoes</h3>
+                <p class="product-category">Athletic</p>
+                <p class="product-price">$42.50</p>
+                <button class="btn btn-primary">View Details</button>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image">
+                <img src="images/product-placeholder.svg" alt="Related Product 3">
+              </div>
+              <div class="product-details">
+                <h3>Performance Walking Shoes</h3>
+                <p class="product-category">Athletic</p>
+                <p class="product-price">$38.00</p>
+                <button class="btn btn-primary">View Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>WholesaleFootwear</h3>
+          <p>Your trusted partner for wholesale footwear solutions since 2005. Serving retailers and distributors worldwide.</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#productsPage">Products</a></li>
+            <li><a href="index.html#ordersPage">Orders</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Customer Service</h3>
+          <ul class="footer-links">
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Shipping Policy</a></li>
+            <li><a href="#">Return Policy</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Contact Us</h3>
+          <ul class="contact-info">
+            <li><i class="fas fa-map-marker-alt"></i> 123 Warehouse Ave, Industry City, CA 90210</li>
+            <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+            <li><i class="fas fa-envelope"></i> sales@wholesalefootwear.com</li>
+            <li><i class="fas fa-clock"></i> Mon-Fri: 9AM-5PM PT</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2023 WholesaleFootwear. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="js/product-detail.js"></script>
+</body>
+</html> 

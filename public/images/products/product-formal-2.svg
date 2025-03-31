@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#f0f0f0"/>
+  <text x="200" y="50" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" fill="#333">Classic Dress Shoe</text>
+  <path d="M100,190 L150,170 L250,170 L300,190 L310,220 L90,220 Z" fill="#212121" stroke="#000" stroke-width="2"/>
+  <path d="M150,170 L160,150 L240,150 L250,170" fill="#212121" stroke="#000" stroke-width="2"/>
+  <ellipse cx="200" cy="190" rx="40" ry="5" fill="#424242" stroke="none"/>
+  <path d="M120,205 L280,205" stroke="#424242" stroke-width="2" stroke-dasharray="5,3"/>
+</svg> 

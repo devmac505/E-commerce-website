@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#f0f0f0"/>
+  <text x="200" y="50" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" fill="#333">Trail Running Shoe</text>
+  <path d="M100,180 C120,150 170,140 200,160 C230,140 280,150 300,180 C250,210 150,210 100,180 Z" fill="#34a853" stroke="#333" stroke-width="2"/>
+  <path d="M120,180 L110,220 L290,220 L280,180" fill="#34a853" stroke="#333" stroke-width="2"/>
+  <path d="M200,160 L200,220" stroke="#fff" stroke-width="3" stroke-dasharray="5,5"/>
+  <path d="M150,160 L160,220" stroke="#34a853" stroke-width="5"/>
+  <path d="M250,160 L240,220" stroke="#34a853" stroke-width="5"/>
+</svg> 

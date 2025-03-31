@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WholesaleFootwear - B2B Shoe Marketplace</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="logo">
+        <h1>WholesaleFootwear</h1>
+      </div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#" class="active" data-page="home">Home</a></li>
+          <li><a href="#" data-page="products">Products</a></li>
+          <li><a href="#" data-page="orders">Orders</a></li>
+          <li><a href="#" data-page="account">Account</a></li>
+        </ul>
+      </nav>
+      <div class="user-actions">
+        <div class="user-menu" id="userMenu">
+          <span>Welcome, <span id="userName">Guest</span></span>
+          <button id="logoutBtn" class="btn-logout hidden"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+        <div class="auth-buttons" id="authButtons">
+          <button id="loginBtn" class="btn btn-login">Login</button>
+          <button id="registerBtn" class="btn btn-register">Register</button>
+        </div>
+        <div class="cart-icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count" id="cartCount">0</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main>
+    <!-- Home Page -->
+    <section id="homePage" class="page active">
+      <div class="hero">
+        <div class="container">
+          <div class="hero-content">
+            <h1>Wholesale Footwear Solutions for Your Business</h1>
+            <p>Quality shoes at competitive prices for retailers and distributors</p>
+            <button class="btn btn-primary explore-btn" id="exploreProductsBtn">Explore Products</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="features">
+        <div class="container">
+          <h2 class="section-title">Why Choose Us</h2>
+          <div class="feature-grid">
+            <div class="feature-card">
+              <i class="fas fa-tag"></i>
+              <h3>Competitive Pricing</h3>
+              <p>Get the best wholesale prices with volume discounts</p>
+            </div>
+            <div class="feature-card">
+              <i class="fas fa-truck"></i>
+              <h3>Fast Shipping</h3>
+              <p>Reliable delivery to meet your inventory demands</p>
+            </div>
+            <div class="feature-card">
+              <i class="fas fa-box-open"></i>
+              <h3>Bulk Orders</h3>
+              <p>Place large orders with customizable shipping options</p>
+            </div>
+            <div class="feature-card">
+              <i class="fas fa-medal"></i>
+              <h3>Quality Products</h3>
+              <p>Premium footwear from trusted manufacturers</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="categories">
+        <div class="container">
+          <h2 class="section-title">Popular Categories</h2>
+          <div class="category-grid">
+            <div class="category-card" data-category="athletic">
+              <img src="images/categories/category-athletic.svg" alt="Athletic Shoes">
+              <h3>Athletic</h3>
+            </div>
+            <div class="category-card" data-category="formal">
+              <img src="images/categories/category-formal.svg" alt="Formal Shoes">
+              <h3>Formal</h3>
+            </div>
+            <div class="category-card" data-category="casual">
+              <img src="images/categories/category-casual.svg" alt="Casual Shoes">
+              <h3>Casual</h3>
+            </div>
+            <div class="category-card" data-category="boots">
+              <img src="images/categories/category-boots.svg" alt="Boots">
+              <h3>Boots</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="featured-products">
+        <div class="container">
+          <h2 class="section-title">Featured Products</h2>
+          <div class="product-grid" id="featuredProductsGrid">
+            <!-- Products will be loaded dynamically -->
+            <div class="product-card skeleton"></div>
+            <div class="product-card skeleton"></div>
+            <div class="product-card skeleton"></div>
+            <div class="product-card skeleton"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products Page -->
+    <section id="productsPage" class="page">
+      <div class="container">
+        <div class="page-header">
+          <h1>Products Catalog</h1>
+          <div class="filters">
+            <div class="filter-group">
+              <label for="categoryFilter">Category:</label>
+              <select id="categoryFilter">
+                <option value="">All Categories</option>
+                <option value="athletic">Athletic</option>
+                <option value="formal">Formal</option>
+                <option value="casual">Casual</option>
+                <option value="boots">Boots</option>
+                <option value="sandals">Sandals</option>
+                <option value="slippers">Slippers</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="genderFilter">Gender:</label>
+              <select id="genderFilter">
+                <option value="">All Genders</option>
+                <option value="men">Men</option>
+                <option value="women">Women</option>
+                <option value="unisex">Unisex</option>
+                <option value="children">Children</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="sortBy">Sort By:</label>
+              <select id="sortBy">
+                <option value="newest">Newest</option>
+                <option value="priceAsc">Price: Low to High</option>
+                <option value="priceDesc">Price: High to Low</option>
+                <option value="nameAsc">Name: A-Z</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="product-grid" id="productsGrid">
+          <!-- Products will be loaded dynamically -->
+          <div class="product-card skeleton"></div>
+          <div class="product-card skeleton"></div>
+          <div class="product-card skeleton"></div>
+          <div class="product-card skeleton"></div>
+          <div class="product-card skeleton"></div>
+          <div class="product-card skeleton"></div>
+          <div class="product-card skeleton"></div>
+          <div class="product-card skeleton"></div>
+        </div>
+        
+        <div class="pagination" id="productsPagination">
+          <!-- Pagination will be loaded dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Orders Page -->
+    <section id="ordersPage" class="page">
+      <div class="container">
+        <div class="page-header">
+          <h1>My Orders</h1>
+          <div class="order-actions">
+            <button class="btn btn-primary" id="newOrderBtn">New Order</button>
+          </div>
+        </div>
+        
+        <div class="orders-list" id="ordersList">
+          <!-- Orders will be loaded dynamically -->
+          <div class="order-card skeleton"></div>
+          <div class="order-card skeleton"></div>
+          <div class="order-card skeleton"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Account Page -->
+    <section id="accountPage" class="page">
+      <div class="container">
+        <div class="page-header">
+          <h1>Account Information</h1>
+        </div>
+        
+        <div class="account-info" id="accountInfo">
+          <div class="account-card">
+            <h2>Company Information</h2>
+            <div class="account-details">
+              <div class="detail-row">
+                <span class="detail-label">Company Name:</span>
+                <span class="detail-value" id="companyName"></span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Email:</span>
+                <span class="detail-value" id="companyEmail"></span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Business Registration:</span>
+                <span class="detail-value" id="businessRegistration"></span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Account Status:</span>
+                <span class="detail-value" id="accountStatus"></span>
+              </div>
+            </div>
+            <button class="btn btn-secondary" id="editAccountBtn">Edit Information</button>
+          </div>
+          
+          <div class="account-card">
+            <h2>Billing Address</h2>
+            <div class="account-details" id="billingAddress">
+              <!-- Address details will be loaded dynamically -->
+            </div>
+            <button class="btn btn-secondary" id="editBillingBtn">Edit Address</button>
+          </div>
+          
+          <div class="account-card">
+            <h2>Shipping Address</h2>
+            <div class="account-details" id="shippingAddress">
+              <!-- Address details will be loaded dynamically -->
+            </div>
+            <button class="btn btn-secondary" id="editShippingBtn">Edit Address</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modals -->
+  <!-- Login Modal -->
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeLoginModal">&times;</span>
+      <h2>Login to Your Account</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" required>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+        <div class="form-footer">
+          <p>Don't have an account? <a href="#" id="showRegisterModal">Register now</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div class="modal" id="registerModal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeRegisterModal">&times;</span>
+      <h2>Register for B2B Access</h2>
+      <p class="modal-subtitle">Create a wholesale account to access our product catalog and pricing</p>
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="companyNameInput">Company Name</label>
+          <input type="text" id="companyNameInput" required>
+        </div>
+        <div class="form-group">
+          <label for="emailInput">Email Address</label>
+          <input type="email" id="emailInput" required>
+        </div>
+        <div class="form-group">
+          <label for="passwordInput">Password</label>
+          <input type="password" id="passwordInput" required minlength="6">
+        </div>
+        <div class="form-group">
+          <label for="businessRegInput">Business Registration Number</label>
+          <input type="text" id="businessRegInput" required>
+        </div>
+        <div class="form-group">
+          <label for="contactNameInput">Contact Person Name</label>
+          <input type="text" id="contactNameInput" required>
+        </div>
+        <div class="form-group">
+          <label for="contactPhoneInput">Contact Phone</label>
+          <input type="tel" id="contactPhoneInput" required>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+        <div class="form-footer">
+          <p>Already have an account? <a href="#" id="showLoginModal">Login</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Product Detail Modal -->
+  <div class="modal" id="productDetailModal">
+    <div class="modal-content product-detail-modal">
+      <span class="close-btn" id="closeProductDetailModal">&times;</span>
+      <div class="product-detail-container" id="productDetailContainer">
+        <!-- Product details will be loaded dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Modal -->
+  <div class="modal" id="cartModal">
+    <div class="modal-content cart-modal">
+      <span class="close-btn" id="closeCartModal">&times;</span>
+      <h2>Your Cart</h2>
+      <div class="cart-items" id="cartItems">
+        <!-- Cart items will be loaded dynamically -->
+        <p class="empty-cart-message">Your cart is empty</p>
+      </div>
+      <div class="cart-summary">
+        <div class="cart-subtotal">
+          <span>Subtotal:</span>
+          <span id="cartSubtotal">$0.00</span>
+        </div>
+        <div class="cart-actions">
+          <button class="btn btn-secondary" id="clearCartBtn">Clear Cart</button>
+          <button class="btn btn-primary" id="checkoutBtn">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div class="modal" id="checkoutModal">
+    <div class="modal-content checkout-modal">
+      <span class="close-btn" id="closeCheckoutModal">&times;</span>
+      <h2>Checkout</h2>
+      <form id="checkoutForm">
+        <div class="checkout-columns">
+          <div class="checkout-column">
+            <h3>Billing Information</h3>
+            <div class="form-group">
+              <label for="billingStreet">Street Address</label>
+              <input type="text" id="billingStreet" required>
+            </div>
+            <div class="form-group">
+              <label for="billingCity">City</label>
+              <input type="text" id="billingCity" required>
+            </div>
+            <div class="form-group">
+              <label for="billingState">State/Province</label>
+              <input type="text" id="billingState" required>
+            </div>
+            <div class="form-group">
+              <label for="billingPostal">Postal Code</label>
+              <input type="text" id="billingPostal" required>
+            </div>
+            <div class="form-group">
+              <label for="billingCountry">Country</label>
+              <input type="text" id="billingCountry" required>
+            </div>
+          </div>
+          
+          <div class="checkout-column">
+            <h3>Shipping Information</h3>
+            <div class="form-group checkbox-group">
+              <input type="checkbox" id="sameAsBilling">
+              <label for="sameAsBilling">Same as Billing Address</label>
+            </div>
+            <div id="shippingFields">
+              <div class="form-group">
+                <label for="shippingStreet">Street Address</label>
+                <input type="text" id="shippingStreet" required>
+              </div>
+              <div class="form-group">
+                <label for="shippingCity">City</label>
+                <input type="text" id="shippingCity" required>
+              </div>
+              <div class="form-group">
+                <label for="shippingState">State/Province</label>
+                <input type="text" id="shippingState" required>
+              </div>
+              <div class="form-group">
+                <label for="shippingPostal">Postal Code</label>
+                <input type="text" id="shippingPostal" required>
+              </div>
+              <div class="form-group">
+                <label for="shippingCountry">Country</label>
+                <input type="text" id="shippingCountry" required>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="checkout-section">
+          <h3>Payment Information</h3>
+          <div class="form-group">
+            <label for="paymentMethod">Payment Method</label>
+            <select id="paymentMethod" required>
+              <option value="purchase_order">Purchase Order</option>
+              <option value="bank_transfer">Bank Transfer</option>
+              <option value="credit_card">Credit Card</option>
+              <option value="net_30">Net 30</option>
+              <option value="net_60">Net 60</option>
+            </select>
+          </div>
+          <div class="form-group" id="poNumberGroup">
+            <label for="purchaseOrderNumber">Purchase Order Number</label>
+            <input type="text" id="purchaseOrderNumber">
+          </div>
+        </div>
+
+        <div class="checkout-section">
+          <h3>Shipping Method</h3>
+          <div class="form-group">
+            <label for="shippingMethod">Select Shipping Method</label>
+            <select id="shippingMethod" required>
+              <option value="standard">Standard Shipping (7-14 days) - $25.00</option>
+              <option value="express">Express Shipping (3-5 days) - $45.00</option>
+              <option value="overnight">Overnight Shipping (1-2 days) - $75.00</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="checkout-summary">
+          <h3>Order Summary</h3>
+          <div class="summary-items" id="checkoutItems">
+            <!-- Summary items will be loaded dynamically -->
+          </div>
+          <div class="summary-totals">
+            <div class="summary-row">
+              <span>Subtotal:</span>
+              <span id="checkoutSubtotal">$0.00</span>
+            </div>
+            <div class="summary-row">
+              <span>Tax (8%):</span>
+              <span id="checkoutTax">$0.00</span>
+            </div>
+            <div class="summary-row">
+              <span>Shipping:</span>
+              <span id="checkoutShipping">$25.00</span>
+            </div>
+            <div class="summary-row total">
+              <span>Total:</span>
+              <span id="checkoutTotal">$0.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" id="backToCartBtn">Back to Cart</button>
+          <button type="submit" class="btn btn-primary">Place Order</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Order Success Modal -->
+  <div class="modal" id="orderSuccessModal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeOrderSuccessModal">&times;</span>
+      <div class="success-content">
+        <i class="fas fa-check-circle"></i>
+        <h2>Order Placed Successfully!</h2>
+        <p>Your order has been placed successfully. Your order number is: <span id="orderNumber"></span></p>
+        <p>You will receive an email confirmation shortly.</p>
+        <div class="success-actions">
+          <button class="btn btn-secondary" id="viewOrdersBtn">View My Orders</button>
+          <button class="btn btn-primary" id="continueShopping">Continue Shopping</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-columns">
+        <div class="footer-column">
+          <h3>WholesaleFootwear</h3>
+          <p>Your trusted B2B partner for wholesale footwear solutions.</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Orders</a></li>
+            <li><a href="#">Account</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Customer Service</h3>
+          <ul>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Shipping Policy</a></li>
+            <li><a href="#">Return Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Contact Us</h3>
+          <p><i class="fas fa-map-marker-alt"></i> 123 Business Ave, Suite 100<br>New York, NY 10001</p>
+          <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+          <p><i class="fas fa-envelope"></i> info@wholesalefootwear.com</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2023 WholesaleFootwear. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="js/main.js"></script>
+</body>
+</html> 

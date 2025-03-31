@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#f0f0f0"/>
+  <text x="200" y="150" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" fill="#333">Formal Shoes</text>
+  <path d="M120,190 L160,170 L240,170 L280,190 L290,220 L110,220 Z" fill="#333" stroke="#000" stroke-width="2"/>
+  <path d="M160,170 L170,150 L230,150 L240,170" fill="#333" stroke="#000" stroke-width="2"/>
+</svg> 
