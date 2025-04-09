@@ -1,34 +1,14 @@
-# Dependency directories
+# Dependencies
 node_modules/
-jspm_packages/
+package-lock.json
 
 # Environment variables
 .env
-.env.local
-.env.development
-.env.test
-.env.production
-.env.example
-
-# Build outputs
-dist/
-build/
-*.tgz
 
 # Logs
 logs
 *.log
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-
-# Coverage directory used by tools like istanbul
-coverage/
-*.lcov
-
-# nyc test coverage
-.nyc_output/
 
 # Runtime data
 pids
@@ -36,19 +16,17 @@ pids
 *.seed
 *.pid.lock
 
-# Caches
-.npm
-.eslintcache
-.node_repl_history
-.yarn-integrity
-.cache/
-.parcel-cache/
+# Directory for uploaded files
+public/uploads/*
+!public/uploads/.gitkeep
 
-# IDE and editors
+# IDE specific files
 .idea/
 .vscode/
 *.swp
 *.swo
+
+# OS generated files
 .DS_Store
 .DS_Store?
 ._*
@@ -56,25 +34,3 @@ pids
 .Trashes
 ehthumbs.db
 Thumbs.db
-
-# Debug files
-.node-debug/
-
-# Postman specific files (optional - remove if you want to include these in your repo)
-# postman_environment_dev.json
-# postman_environment_test.json
-# postman_environment_prod.json
-
-# Generated uploads directory (if your app uploads files)
-public/uploads/*
-!public/uploads/.gitkeep
-
-# Local MongoDB data (if using a local MongoDB installation)
-data/db/
-
-# Error logs from MongoDB or other services
-*.err
-
-# Application specific temporary files
-tmp/
-temp/ 
