@@ -1,19 +1,31 @@
 const express = require('express');
 const router = express.Router();
-// We'll create a basic placeholder for now
-// const { createOrder, getOrders, getOrderById } = require('../controllers/orderController');
+const {
+  createOrder,
+  getOrders,
+  getOrderById,
+  updateOrderStatus,
+  updatePaymentStatus
+} = require('../controllers/orderController');
+const { protect, authorize } = require('../middleware/auth');
+const { validate, orderValidation } = require('../middleware/validator');
 
-// Placeholder routes
-router.post('/', (req, res) => {
-  res.status(200).json({ message: 'Create order endpoint (placeholder)' });
-});
+// All order routes require authentication
+router.use(protect);
 
-router.get('/', (req, res) => {
-  res.status(200).json({ message: 'Get all orders endpoint (placeholder)' });
-});
+// Routes accessible by all authenticated users
+router.route('/')
+  .post(validate(orderValidation), createOrder)
+  .get(getOrders);
 
-router.get('/:id', (req, res) => {
-  res.status(200).json({ message: `Get order ${req.params.id} endpoint (placeholder)` });
-});
+router.route('/:id')
+  .get(getOrderById);
+
+// Admin only routes
+router.route('/:id/status')
+  .put(authorize('admin'), updateOrderStatus);
+
+router.route('/:id/payment')
+  .put(authorize('admin'), updatePaymentStatus);
 
 module.exports = router;
