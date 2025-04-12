@@ -1,19 +1,22 @@
 const express = require('express');
 const router = express.Router();
-// We'll create a basic placeholder for now
-// const { registerUser, loginUser, getProfile } = require('../controllers/userController');
+const {
+  registerUser,
+  loginUser,
+  getMe,
+  updateProfile,
+  changePassword
+} = require('../controllers/userController');
+const { protect } = require('../middleware/auth');
+const { validate, registerValidation, loginValidation } = require('../middleware/validator');
 
-// Placeholder routes
-router.post('/register', (req, res) => {
-  res.status(200).json({ message: 'User registration endpoint (placeholder)' });
-});
+// Public routes
+router.post('/register', validate(registerValidation), registerUser);
+router.post('/login', validate(loginValidation), loginUser);
 
-router.post('/login', (req, res) => {
-  res.status(200).json({ message: 'User login endpoint (placeholder)' });
-});
-
-router.get('/profile', (req, res) => {
-  res.status(200).json({ message: 'User profile endpoint (placeholder)' });
-});
+// Protected routes
+router.get('/me', protect, getMe);
+router.put('/profile', protect, updateProfile);
+router.put('/password', protect, changePassword);
 
 module.exports = router;

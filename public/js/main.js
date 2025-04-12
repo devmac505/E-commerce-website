@@ -6,13 +6,13 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Set up navigation
   setupNavigation();
-  
+
   // Set up product cards to link to product detail page
   setupProductLinks();
-  
+
   // Initialize any components needed across the site
   initializeComponents();
-  
+
   // Load product data
   loadProducts();
 });
@@ -22,11 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 function setupNavigation() {
   const navLinks = document.querySelectorAll('.nav-links a');
-  
+
   navLinks.forEach(link => {
     link.addEventListener('click', function(e) {
       const pageName = this.getAttribute('data-page');
-      
+
       // Only handle internal page navigation
       if (pageName) {
         e.preventDefault();
@@ -34,7 +34,7 @@ function setupNavigation() {
       }
     });
   });
-  
+
   // Handle explore products button
   const exploreBtn = document.getElementById('exploreProductsBtn');
   if (exploreBtn) {
@@ -42,14 +42,14 @@ function setupNavigation() {
       showPage('products');
     });
   }
-  
+
   // Handle category card clicks
   const categoryCards = document.querySelectorAll('.category-card');
   categoryCards.forEach(card => {
     card.addEventListener('click', function() {
       const category = this.getAttribute('data-category');
       showPage('products');
-      
+
       // Set the category filter (if it exists)
       const categoryFilter = document.getElementById('categoryFilter');
       if (categoryFilter) {
@@ -71,13 +71,13 @@ function showPage(pageName) {
   pages.forEach(page => {
     page.classList.remove('active');
   });
-  
+
   // Show the requested page
   const targetPage = document.getElementById(`${pageName}Page`);
   if (targetPage) {
     targetPage.classList.add('active');
   }
-  
+
   // Update navigation
   const navLinks = document.querySelectorAll('.nav-links a');
   navLinks.forEach(link => {
@@ -86,7 +86,7 @@ function showPage(pageName) {
       link.classList.add('active');
     }
   });
-  
+
   // Scroll to top
   window.scrollTo(0, 0);
 }
@@ -98,27 +98,27 @@ function setupProductLinks() {
   // Function to attach click handlers to all product cards
   function attachProductCardHandlers() {
     const productCards = document.querySelectorAll('.product-card');
-    
+
     productCards.forEach(card => {
       // Find the view details button in each card
       const viewDetailsBtn = card.querySelector('.btn-primary');
       if (viewDetailsBtn) {
         viewDetailsBtn.addEventListener('click', function(e) {
           e.preventDefault();
-          
+
           // Get product ID from the card's data attribute or from a nearby element
           const productId = card.getAttribute('data-product-id') || 'demo-product';
-          
+
           // Redirect to product detail page with the product ID
           window.location.href = `product-detail.html?id=${productId}`;
         });
       }
     });
   }
-  
+
   // Attach handlers immediately for any cards that exist on page load
   attachProductCardHandlers();
-  
+
   // Set up a mutation observer to attach handlers to dynamically added cards
   const productGrids = document.querySelectorAll('.product-grid');
   if (productGrids.length > 0) {
@@ -130,7 +130,7 @@ function setupProductLinks() {
         }
       });
     });
-    
+
     // Observe each product grid for changes
     productGrids.forEach(grid => {
       observer.observe(grid, { childList: true, subtree: true });
@@ -144,10 +144,10 @@ function setupProductLinks() {
 function initializeComponents() {
   // Modal handling
   setupModals();
-  
+
   // Authentication state
   checkAuthState();
-  
+
   // Cart functionality
   setupCart();
 }
@@ -158,7 +158,7 @@ function initializeComponents() {
 function setupModals() {
   // Get all modal close buttons
   const closeButtons = document.querySelectorAll('.close-btn');
-  
+
   // Add click handlers to all close buttons
   closeButtons.forEach(button => {
     button.addEventListener('click', function() {
@@ -169,14 +169,14 @@ function setupModals() {
       }
     });
   });
-  
+
   // Close modals when clicking outside
   window.addEventListener('click', function(event) {
     if (event.target.classList.contains('modal')) {
       event.target.style.display = 'none';
     }
   });
-  
+
   // Modal toggle links
   const showLoginBtn = document.getElementById('showLoginModal');
   const showRegisterBtn = document.getElementById('showRegisterModal');
@@ -184,7 +184,7 @@ function setupModals() {
   const registerBtn = document.getElementById('registerBtn');
   const loginModal = document.getElementById('loginModal');
   const registerModal = document.getElementById('registerModal');
-  
+
   if (showLoginBtn && loginModal) {
     showLoginBtn.addEventListener('click', function(e) {
       e.preventDefault();
@@ -192,7 +192,7 @@ function setupModals() {
       loginModal.style.display = 'block';
     });
   }
-  
+
   if (showRegisterBtn && registerModal) {
     showRegisterBtn.addEventListener('click', function(e) {
       e.preventDefault();
@@ -200,14 +200,14 @@ function setupModals() {
       registerModal.style.display = 'block';
     });
   }
-  
+
   if (loginBtn && loginModal) {
     loginBtn.addEventListener('click', function(e) {
       e.preventDefault();
       loginModal.style.display = 'block';
     });
   }
-  
+
   if (registerBtn && registerModal) {
     registerBtn.addEventListener('click', function(e) {
       e.preventDefault();
@@ -223,16 +223,16 @@ function checkAuthState() {
   // For demo purposes we'll use local storage to maintain login state
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
   const userName = localStorage.getItem('userName') || 'Guest';
-  
+
   // Update UI based on login state
   const userNameElement = document.getElementById('userName');
   const authButtons = document.getElementById('authButtons');
   const logoutBtn = document.getElementById('logoutBtn');
-  
+
   if (userNameElement) {
     userNameElement.textContent = userName;
   }
-  
+
   if (authButtons && logoutBtn) {
     if (isLoggedIn) {
       authButtons.classList.add('hidden');
@@ -242,34 +242,34 @@ function checkAuthState() {
       logoutBtn.classList.add('hidden');
     }
   }
-  
+
   // Set up logout button
   if (logoutBtn) {
     logoutBtn.addEventListener('click', function() {
       // Clear login state
       localStorage.removeItem('isLoggedIn');
       localStorage.removeItem('userName');
-      
+
       // Refresh the page to update UI
       location.reload();
     });
   }
-  
+
   // Set up login form submission
   const loginForm = document.getElementById('loginForm');
   if (loginForm) {
     loginForm.addEventListener('submit', function(e) {
       e.preventDefault();
-      
+
       // Get form values
       const email = document.getElementById('loginEmail').value;
       const password = document.getElementById('loginPassword').value;
-      
+
       // In a real app, you would validate and send to your backend
       // For demo purposes, we'll just set the login state
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('userName', email.split('@')[0]);
-      
+
       // Close modal and refresh page
       document.getElementById('loginModal').style.display = 'none';
       location.reload();
@@ -284,7 +284,7 @@ function setupCart() {
   // Open cart modal when clicking the cart icon
   const cartIcon = document.querySelector('.cart-icon');
   const cartModal = document.getElementById('cartModal');
-  
+
   if (cartIcon && cartModal) {
     cartIcon.addEventListener('click', function() {
       cartModal.style.display = 'block';
@@ -305,7 +305,7 @@ function formatCurrency(amount) {
 function loadProducts() {
   // Load featured products on home page
   loadFeaturedProducts();
-  
+
   // Load product grid on products page
   loadProductGrid();
 }
@@ -313,65 +313,92 @@ function loadProducts() {
 /**
  * Load featured products on the home page
  */
-function loadFeaturedProducts() {
+async function loadFeaturedProducts() {
   const featuredProductsGrid = document.getElementById('featuredProductsGrid');
   if (!featuredProductsGrid) return;
-  
+
   // Clear loading placeholders
   featuredProductsGrid.innerHTML = '';
-  
-  // Sample featured products data
-  const featuredProducts = [
-    {
-      id: 'athletic-1',
-      name: 'Running Shoe Model X1',
-      price: 89.99,
-      image: 'images/products/product-athletic-1.svg',
-      category: 'athletic',
-      gender: 'unisex'
-    },
-    {
-      id: 'formal-1',
-      name: 'Business Oxford Leather',
-      price: 129.99,
-      image: 'images/products/product-formal-1.svg',
-      category: 'formal',
-      gender: 'men'
-    },
-    {
-      id: 'casual-1',
-      name: 'Everyday Canvas Sneaker',
-      price: 65.99,
-      image: 'images/products/product-casual-1.svg',
-      category: 'casual',
-      gender: 'unisex'
-    },
-    {
-      id: 'boots-1',
-      name: 'Premium Leather Boot',
-      price: 159.99,
-      image: 'images/products/product-boots-1.svg',
-      category: 'boots',
-      gender: 'men'
+
+  try {
+    // Fetch featured products from API
+    const response = await ProductAPI.getProducts({ limit: 4 });
+
+    if (response.success && response.data) {
+      // Create and append product cards
+      response.data.forEach(product => {
+        const productData = {
+          id: product._id,
+          name: product.name,
+          price: product.basePrice,
+          image: product.images && product.images.length > 0 ? product.images[0] : 'images/products/placeholder.svg',
+          category: product.category.name || 'Unknown',
+          gender: product.specifications?.gender || 'unisex'
+        };
+
+        const productCard = createProductCard(productData);
+        featuredProductsGrid.appendChild(productCard);
+      });
+    } else {
+      // Fallback to sample data if API call fails
+      const featuredProducts = [
+        {
+          id: 'athletic-1',
+          name: 'Running Shoe Model X1',
+          price: 89.99,
+          image: 'images/products/product-athletic-1.svg',
+          category: 'athletic',
+          gender: 'unisex'
+        },
+        {
+          id: 'formal-1',
+          name: 'Business Oxford Leather',
+          price: 129.99,
+          image: 'images/products/product-formal-1.svg',
+          category: 'formal',
+          gender: 'men'
+        },
+        {
+          id: 'casual-1',
+          name: 'Everyday Canvas Sneaker',
+          price: 65.99,
+          image: 'images/products/product-casual-1.svg',
+          category: 'casual',
+          gender: 'unisex'
+        },
+        {
+          id: 'boots-1',
+          name: 'Premium Leather Boot',
+          price: 159.99,
+          image: 'images/products/product-boots-1.svg',
+          category: 'boots',
+          gender: 'men'
+        }
+      ];
+
+      // Create and append product cards
+      featuredProducts.forEach(product => {
+        const productCard = createProductCard(product);
+        featuredProductsGrid.appendChild(productCard);
+      });
+
+      console.log('Using sample data for featured products');
     }
-  ];
-  
-  // Create and append product cards
-  featuredProducts.forEach(product => {
-    const productCard = createProductCard(product);
-    featuredProductsGrid.appendChild(productCard);
-  });
+  } catch (error) {
+    console.error('Error loading featured products:', error);
+    featuredProductsGrid.innerHTML = '<p class="error-message">Failed to load featured products. Please try again later.</p>';
+  }
 }
 
 /**
  * Load products grid on the products page
  */
-function loadProductGrid() {
+async function loadProductGrid() {
   const productsGrid = document.getElementById('productsGrid');
   if (!productsGrid) return;
-  
-  // Sample product data
-  const allProducts = [
+
+  // We'll load products from the API, but keep sample data as fallback
+  let allProducts = [
     {
       id: 'athletic-1',
       name: 'Running Shoe Model X1',
@@ -438,38 +465,38 @@ function loadProductGrid() {
       gender: 'women'
     }
   ];
-  
+
   // Set up filter change handlers
   const categoryFilter = document.getElementById('categoryFilter');
   const genderFilter = document.getElementById('genderFilter');
   const sortBy = document.getElementById('sortBy');
-  
+
   // Function to filter and display products
   function filterAndDisplayProducts() {
     // Clear loading placeholders
     productsGrid.innerHTML = '';
-    
+
     // Get filter values
     const categoryValue = categoryFilter ? categoryFilter.value : '';
     const genderValue = genderFilter ? genderFilter.value : '';
     const sortValue = sortBy ? sortBy.value : '';
-    
+
     // Filter products
     let filteredProducts = allProducts.filter(product => {
       let matchesCategory = true;
       let matchesGender = true;
-      
+
       if (categoryValue) {
         matchesCategory = product.category === categoryValue;
       }
-      
+
       if (genderValue) {
         matchesGender = product.gender === genderValue;
       }
-      
+
       return matchesCategory && matchesGender;
     });
-    
+
     // Sort products
     if (sortValue) {
       filteredProducts.sort((a, b) => {
@@ -485,27 +512,27 @@ function loadProductGrid() {
         }
       });
     }
-    
+
     // Create and append product cards
     filteredProducts.forEach(product => {
       const productCard = createProductCard(product);
       productsGrid.appendChild(productCard);
     });
   }
-  
+
   // Add event listeners to filters
   if (categoryFilter) {
     categoryFilter.addEventListener('change', filterAndDisplayProducts);
   }
-  
+
   if (genderFilter) {
     genderFilter.addEventListener('change', filterAndDisplayProducts);
   }
-  
+
   if (sortBy) {
     sortBy.addEventListener('change', filterAndDisplayProducts);
   }
-  
+
   // Initial load
   filterAndDisplayProducts();
 }
@@ -517,7 +544,7 @@ function createProductCard(product) {
   const card = document.createElement('div');
   card.className = 'product-card';
   card.setAttribute('data-product-id', product.id);
-  
+
   card.innerHTML = `
     <div class="product-image">
       <img src="${product.image}" alt="${product.name}">
@@ -534,7 +561,7 @@ function createProductCard(product) {
       </div>
     </div>
   `;
-  
+
   // Add event listener for add to cart button
   const addToCartBtn = card.querySelector('.add-to-cart');
   if (addToCartBtn) {
@@ -544,6 +571,112 @@ function createProductCard(product) {
       // In a real app, you would add the product to the cart here
     });
   }
-  
+  // here we need to fix these part return cart here
   return card;
-} 
+}
+
+// Base API URL
+const API_BASE_URL = '/api';
+
+// Product API calls
+const ProductAPI = {
+  // Get all products with filters
+  getProducts: async (params = {}) => {
+    const queryString = new URLSearchParams(params).toString();
+    try {
+      const response = await fetch(`${API_BASE_URL}/products?${queryString}`);
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      throw error;
+    }
+  },
+
+  // Get single product
+  getProductById: async (productId) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/products/${productId}`);
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching product:', error);
+      throw error;
+    }
+  },
+
+  // Create new product
+  createProduct: async (productData) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/products`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(productData)
+      });
+      return await response.json();
+    } catch (error) {
+      console.error('Error creating product:', error);
+      throw error;
+    }
+  },
+
+  // Update product inventory
+  updateInventory: async (productId, sizeUpdates) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/products/${productId}/inventory`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ sizeUpdates })
+      });
+      return await response.json();
+    } catch (error) {
+      console.error('Error updating inventory:', error);
+      throw error;
+    }
+  },
+
+  // Update price tiers
+  updatePriceTiers: async (productId, priceTiers) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/products/${productId}/price-tiers`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ priceTiers })
+      });
+      return await response.json();
+    } catch (error) {
+      console.error('Error updating price tiers:', error);
+      throw error;
+    }
+  }
+};
+
+// Usage examples
+async function exampleUsage() {
+  // Get products with filters
+  const products = await ProductAPI.getProducts({
+    page: 1,
+    limit: 10,
+    category: 'athletic',
+    minPrice: 50,
+    maxPrice: 200,
+    search: 'running'
+  });
+
+  // Update inventory
+  const inventoryUpdate = await ProductAPI.updateInventory('productId123', [
+    { size: '42', inventory: 100 },
+    { size: '43', inventory: 150 }
+  ]);
+
+  // Update price tiers
+  const priceTierUpdate = await ProductAPI.updatePriceTiers('productId123', [
+    { minQuantity: 10, price: 45.99 },
+    { minQuantity: 50, price: 42.99 },
+    { minQuantity: 100, price: 39.99 }
+  ]);
+}
