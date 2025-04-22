@@ -24,6 +24,9 @@ exports.createProduct = async (req, res, next) => {
  */
 exports.getProducts = async (req, res, next) => {
   try {
+    console.log('GET /api/products - Request received');
+    console.log('Query params:', req.query);
+
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
@@ -33,6 +36,7 @@ exports.getProducts = async (req, res, next) => {
 
     if (req.query.category) {
       filter.category = req.query.category;
+      console.log('Filtering by category:', req.query.category);
     }
 
     if (req.query.brand) {
@@ -49,9 +53,14 @@ exports.getProducts = async (req, res, next) => {
       filter.$text = { $search: req.query.search };
     }
 
+    // Default to active products only
+    filter.isActive = true;
+
     if (req.query.isActive !== undefined) {
       filter.isActive = req.query.isActive === 'true';
     }
+
+    console.log('Filter criteria:', filter);
 
     // Execute query with pagination
     const products = await Product.find(filter)
@@ -59,6 +68,8 @@ exports.getProducts = async (req, res, next) => {
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
+
+    console.log(`Found ${products.length} products`);
 
     // Get total count for pagination
     const total = await Product.countDocuments(filter);

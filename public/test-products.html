@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Products API</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    pre {
+      background-color: #f5f5f5;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    button {
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Test Products API</h1>
+  
+  <button id="fetchProducts">Fetch Products</button>
+  <button id="fetchCategories">Fetch Categories</button>
+  
+  <div id="status"></div>
+  <pre id="output"></pre>
+  
+  <script>
+    document.getElementById('fetchProducts').addEventListener('click', async () => {
+      const statusEl = document.getElementById('status');
+      const outputEl = document.getElementById('output');
+      
+      statusEl.innerHTML = 'Fetching products...';
+      statusEl.className = '';
+      
+      try {
+        const response = await fetch('/api/products');
+        const statusText = `Status: ${response.status} ${response.statusText}`;
+        
+        try {
+          const data = await response.json();
+          statusEl.innerHTML = statusText;
+          outputEl.textContent = JSON.stringify(data, null, 2);
+        } catch (jsonError) {
+          statusEl.innerHTML = `${statusText} - Error parsing JSON`;
+          statusEl.className = 'error';
+          outputEl.textContent = await response.text();
+        }
+      } catch (error) {
+        statusEl.innerHTML = `Error: ${error.message}`;
+        statusEl.className = 'error';
+        outputEl.textContent = '';
+      }
+    });
+    
+    document.getElementById('fetchCategories').addEventListener('click', async () => {
+      const statusEl = document.getElementById('status');
+      const outputEl = document.getElementById('output');
+      
+      statusEl.innerHTML = 'Fetching categories...';
+      statusEl.className = '';
+      
+      try {
+        const response = await fetch('/api/categories');
+        const statusText = `Status: ${response.status} ${response.statusText}`;
+        
+        try {
+          const data = await response.json();
+          statusEl.innerHTML = statusText;
+          outputEl.textContent = JSON.stringify(data, null, 2);
+        } catch (jsonError) {
+          statusEl.innerHTML = `${statusText} - Error parsing JSON`;
+          statusEl.className = 'error';
+          outputEl.textContent = await response.text();
+        }
+      } catch (error) {
+        statusEl.innerHTML = `Error: ${error.message}`;
+        statusEl.className = 'error';
+        outputEl.textContent = '';
+      }
+    });
+  </script>
+</body>
+</html>

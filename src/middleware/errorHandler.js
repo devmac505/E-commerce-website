@@ -3,7 +3,18 @@
  * Provides consistent error responses across the API
  */
 const errorHandler = (err, req, res, next) => {
-  console.error(err.stack);
+  console.error('ERROR OCCURRED:');
+  console.error(`URL: ${req.method} ${req.originalUrl}`);
+  console.error(`Error: ${err.message}`);
+  console.error(`Stack: ${err.stack}`);
+
+  if (err.name) {
+    console.error(`Error name: ${err.name}`);
+  }
+
+  if (err.code) {
+    console.error(`Error code: ${err.code}`);
+  }
 
   // Default error status and message
   let statusCode = err.statusCode || 500;
@@ -13,12 +24,12 @@ const errorHandler = (err, req, res, next) => {
   if (err.name === 'ValidationError') {
     statusCode = 400;
     const errors = {};
-    
+
     // Extract validation error messages
     Object.keys(err.errors).forEach(key => {
       errors[key] = err.errors[key].message;
     });
-    
+
     return res.status(statusCode).json({
       success: false,
       error: 'Validation Error',
