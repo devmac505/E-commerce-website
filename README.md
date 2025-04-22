@@ -1,6 +1,6 @@
-# B2B Wholesale Footwear Marketplace
+# WholesaleFootwear - B2B Shoe Marketplace
 
-A B2B e-commerce platform specialized for wholesale footwear trading.
+A modern React-based e-commerce platform for wholesale footwear distribution.
 
 ## Features
 
@@ -11,31 +11,66 @@ A B2B e-commerce platform specialized for wholesale footwear trading.
   - Bulk pricing tiers
   - Inventory management
 
-- User Authentication & Authorization (Coming Soon)
+- User Authentication & Authorization
   - User registration and login
   - Role-based access (Admin, Wholesaler, Retailer)
   - Profile management
   - Password reset functionality
 
-- Shopping Cart & Order Management (Coming Soon)
+- Shopping Cart & Order Management
   - Add to cart with quantity validation
   - Bulk order handling
   - Order status tracking
   - Order history
 
+- Image Management
+  - Upload product images
+  - Set featured images for products
+  - Background images for featured products
+  - Image gallery for product details
+
 ## Tech Stack
 
-- Node.js
-- Express.js
-- MongoDB
-- JWT for authentication
-- Other dependencies (see package.json)
+- Frontend:
+  - React.js
+  - React Router for navigation
+  - CSS for styling
+
+- Backend:
+  - Node.js
+  - Express.js
+  - MongoDB
+  - JWT for authentication
+
+## Project Structure
+
+```
+├── public/               # Static assets and compiled React app
+│   ├── dist/             # Compiled React app
+│   ├── images/           # Image assets
+│   └── react-index.html  # Main HTML file for React app
+├── src/
+│   ├── client/           # React frontend
+│   │   ├── assets/       # CSS and other assets
+│   │   ├── components/   # React components
+│   │   ├── pages/        # Page components
+│   │   ├── services/     # API services
+│   │   ├── App.js        # Main React component
+│   │   └── index.js      # React entry point
+│   ├── config/           # Server configuration
+│   ├── controllers/      # API controllers
+│   ├── middleware/       # Express middleware
+│   ├── models/           # Mongoose models
+│   ├── routes/           # API routes
+│   ├── utils/            # Utility functions
+│   └── app.js            # Express server entry point
+```
 
 ## Getting Started
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/your-repo-name.git
+git clone https://github.com/devmac505/E-commerce-website.git
 ```
 
 2. Install dependencies:
@@ -45,13 +80,24 @@ npm install
 
 3. Create a .env file in the root directory:
 ```env
-PORT=5000
+PORT=4000
 MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
 ```
 
 4. Run the development server:
 ```bash
-npm start
+npm run dev
+```
+
+This will start:
+- The Express server on port 4000
+- The React development server with hot reloading
+
+5. For production build:
+```bash
+npm run build
+npm run prod
 ```
 
 ## API Documentation
@@ -64,6 +110,23 @@ npm start
 - `PUT /api/products/:id` - Update product
 - `DELETE /api/products/:id` - Delete product
 - `PUT /api/products/:id/inventory` - Update product inventory
+- `POST /api/products/:id/image` - Upload product image
+- `PUT /api/products/:id/featured-image` - Set featured image
+- `DELETE /api/products/:id/image/:imageIndex` - Delete product image
+
+### Users
+
+- `POST /api/users/register` - Register new user
+- `POST /api/users/login` - Login user
+- `GET /api/users/profile` - Get user profile
+- `PUT /api/users/profile` - Update user profile
+
+### Orders
+
+- `POST /api/orders` - Create new order
+- `GET /api/orders` - Get user orders
+- `GET /api/orders/:id` - Get order details
+- `PUT /api/orders/:id/status` - Update order status
 
 ## Contributing
 

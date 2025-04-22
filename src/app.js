@@ -11,6 +11,7 @@ validateEnv();
 
 // Routes
 const productRoutes = require('./routes/productRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 const userRoutes = require('./routes/userRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 
@@ -18,6 +19,12 @@ const app = express();
 
 // Connect to database
 connectDB();
+
+// Add request logging middleware
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  next();
+});
 
 // Middleware
 app.use(cors());
@@ -29,12 +36,29 @@ app.use(express.static('public'));
 
 // Mount routes
 app.use('/api/products', productRoutes);
+app.use('/api/categories', categoryRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
 
-// Serve index.html for any route that doesn't match an API route or static file
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));
+// Serve React app if available
+if (process.env.NODE_ENV === 'production') {
+  // Serve React build files
+  app.use(express.static(path.join(__dirname, '../public/dist')));
+}
+
+// Serve React app for all routes that don't match an API route or static file
+app.use((req, res, next) => {
+  // Skip API routes
+  if (req.path.startsWith('/api')) {
+    return next();
+  }
+
+  // Serve the React app for client-side routing
+  if (req.method === 'GET') {
+    res.sendFile(path.resolve(__dirname, '../public/index.html'));
+  } else {
+    next();
+  }
 });
 
 // Error handling middleware
