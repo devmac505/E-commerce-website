@@ -398,7 +398,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2023 WholesaleFootwear. All rights reserved.</p>
+        <p>&copy; Mark Anthony Custodio © 2025 WholesaleFootwear. All rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -408,28 +408,28 @@
     let products = [];
     let categories = [];
     let filteredProducts = [];
-    
+
     // DOM Elements
     const productsGrid = document.getElementById('productsGrid');
     const categoryFilter = document.getElementById('categoryFilter');
     const genderFilter = document.getElementById('genderFilter');
     const sortByFilter = document.getElementById('sortBy');
     const errorContainer = document.getElementById('errorContainer');
-    
+
     // Format currency
     function formatCurrency(amount) {
       return `$${parseFloat(amount).toFixed(2)}`;
     }
-    
+
     // Fetch categories
     async function fetchCategories() {
       try {
         const response = await fetch('/api/categories');
         const data = await response.json();
-        
+
         if (data.success && data.data) {
           categories = data.data;
-          
+
           // Populate category filter
           categories.forEach(category => {
             const option = document.createElement('option');
@@ -442,29 +442,29 @@
         console.error('Error fetching categories:', error);
       }
     }
-    
+
     // Fetch products
     async function fetchProducts() {
       try {
         errorContainer.innerHTML = '';
         productsGrid.innerHTML = '<div class="loading">Loading products...</div>';
-        
+
         const response = await fetch('/api/products');
         const data = await response.json();
-        
+
         if (data.success && data.data) {
           products = data.data.map(product => ({
             id: product._id,
             name: product.name,
             price: product.basePrice,
-            image: product.images && product.images.length > 0 
-              ? product.images[0] 
+            image: product.images && product.images.length > 0
+              ? product.images[0]
               : '/images/product-placeholder.svg',
             category: product.category?.name || 'Unknown',
             categoryId: product.category?._id,
             gender: product.specifications?.gender || 'unisex'
           }));
-          
+
           applyFilters();
         } else {
           showError('Failed to load products');
@@ -474,53 +474,53 @@
         showError('Failed to load products. Please try again later.');
       }
     }
-    
+
     // Apply filters and sort
     function applyFilters() {
       const categoryValue = categoryFilter.value;
       const genderValue = genderFilter.value;
       const sortValue = sortByFilter.value;
-      
+
       // Filter products
       filteredProducts = products.filter(product => {
         // Category filter
         if (categoryValue && product.categoryId !== categoryValue) {
           return false;
         }
-        
+
         // Gender filter
         if (genderValue && product.gender !== genderValue) {
           return false;
         }
-        
+
         return true;
       });
-      
+
       // Sort products
       const [sortField, sortDirection] = sortValue.split('_');
       filteredProducts.sort((a, b) => {
         if (sortField === 'name') {
-          return sortDirection === 'asc' 
-            ? a.name.localeCompare(b.name) 
+          return sortDirection === 'asc'
+            ? a.name.localeCompare(b.name)
             : b.name.localeCompare(a.name);
         } else if (sortField === 'price') {
-          return sortDirection === 'asc' 
-            ? a.price - b.price 
+          return sortDirection === 'asc'
+            ? a.price - b.price
             : b.price - a.price;
         }
         return 0;
       });
-      
+
       renderProducts();
     }
-    
+
     // Render products
     function renderProducts() {
       if (filteredProducts.length === 0) {
         productsGrid.innerHTML = '<div class="no-products">No products found matching your criteria.</div>';
         return;
       }
-      
+
       const productsHTML = filteredProducts.map(product => `
         <div class="product-card">
           <div class="product-image">
@@ -541,16 +541,16 @@
           </div>
         </div>
       `).join('');
-      
+
       productsGrid.innerHTML = productsHTML;
     }
-    
+
     // Show error message
     function showError(message) {
       errorContainer.innerHTML = `<div class="error">${message}</div>`;
       productsGrid.innerHTML = '';
     }
-    
+
     // Add to cart function
     function addToCart(productId) {
       const product = products.find(p => p.id === productId);
@@ -558,12 +558,12 @@
         alert(`Added ${product.name} to cart!`);
       }
     }
-    
+
     // Event listeners
     categoryFilter.addEventListener('change', applyFilters);
     genderFilter.addEventListener('change', applyFilters);
     sortByFilter.addEventListener('change', applyFilters);
-    
+
     // Initialize
     fetchCategories();
     fetchProducts();

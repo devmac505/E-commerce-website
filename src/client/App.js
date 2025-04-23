@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Copyright from './components/Copyright';
 import LoadingSpinner from './components/LoadingSpinner';
 
 // Lazy load page components with named chunks for better caching
@@ -36,6 +37,7 @@ function App() {
         </Suspense>
       </main>
       <Footer />
+      <Copyright />
     </div>
   );
 }

@@ -18,7 +18,7 @@ function Footer() {
               <a href="#"><i className="fab fa-linkedin"></i></a>
             </div>
           </div>
-          
+
           <div className="footer-section">
             <h3>Quick Links</h3>
             <ul>
@@ -28,7 +28,7 @@ function Footer() {
               <li><Link to="/contact">Contact</Link></li>
             </ul>
           </div>
-          
+
           <div className="footer-section">
             <h3>Categories</h3>
             <ul>
@@ -38,7 +38,7 @@ function Footer() {
               <li><Link to="/products?category=boots">Boots</Link></li>
             </ul>
           </div>
-          
+
           <div className="footer-section">
             <h3>Contact Us</h3>
             <p><i className="fas fa-map-marker-alt"></i> 123 Business Ave, Suite 100</p>
@@ -46,9 +46,9 @@ function Footer() {
             <p><i className="fas fa-envelope"></i> info@wholesalefootwear.com</p>
           </div>
         </div>
-        
+
         <div className="footer-bottom">
-          <p>&copy; {currentYear} WholesaleFootwear. All rights reserved.</p>
+          <p>&copy; {currentYear} Mark Anthony Custodio © 2025 WholesaleFootwear. All rights reserved.</p>
         </div>
       </div>
     </footer>

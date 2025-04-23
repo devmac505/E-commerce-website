@@ -10,13 +10,16 @@ require('dotenv').config();
 module.exports = {
   entry: './src/client/index.js',
   output: {
-    path: path.resolve(__dirname, 'public/dist'),
-    filename: '[name].[contenthash].js',
-    chunkFilename: '[name].[contenthash].chunk.js',
-    publicPath: '/dist/',
+    path: path.resolve(__dirname, 'public'),
+    filename: 'js/[name].[contenthash].js',
+    chunkFilename: 'js/[name].[contenthash].chunk.js',
+    publicPath: '/',
     assetModuleFilename: 'assets/[hash][ext][query]',
-    clean: true,
+    clean: false,
     crossOriginLoading: 'anonymous'
+  },
+  stats: {
+    errorDetails: true
   },
   resolve: {
     extensions: ['.js', '.jsx']
@@ -131,8 +134,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/client/template.html',
-      filename: '../index.html',  // Output to public directory
-      publicPath: '/dist/',
+      filename: 'index.html',  // Output to public directory
+      publicPath: '/',
       scriptLoading: 'defer',
       inject: true,
       minify: {
@@ -173,13 +176,15 @@ module.exports = {
     historyApiFallback: {
       disableDotRule: true,
       rewrites: [
-        { from: /^\/dist\/.*/, to: context => context.parsedUrl.pathname },
         { from: /./, to: '/index.html' }
       ]
     },
     devMiddleware: {
-      publicPath: '/dist/',
+      publicPath: '/',
       writeToDisk: true,
+      stats: {
+        errorDetails: true
+      }
     },
     headers: {
       'Access-Control-Allow-Origin': '*',

@@ -280,6 +280,15 @@ footer {
   margin-top: 50px;
 }
 
+/* Copyright Notice */
+.copyright-notice {
+  background-color: var(--primary);
+  color: var(--white);
+  text-align: center;
+  padding: 15px 0;
+  font-size: 14px;
+}
+
 .footer-content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
