@@ -67,11 +67,9 @@ function ProductsPage() {
 
         console.log('API request params:', params);
 
-        // Direct fetch instead of using the API service
-        const queryString = new URLSearchParams(params).toString();
-        const response = await fetch(`/api/products?${queryString}`);
-        const responseData = await response.json();
-        console.log('Direct API response:', responseData);
+        // Use the API service instead of direct fetch
+        const responseData = await ProductAPI.getProducts(params);
+        console.log('API response:', responseData);
 
         if (responseData && responseData.success && Array.isArray(responseData.data)) {
           // Transform API data to match our expected format
