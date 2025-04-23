@@ -23,12 +23,6 @@ A modern React-based e-commerce platform for wholesale footwear distribution.
   - Order status tracking
   - Order history
 
-- Image Management
-  - Upload product images
-  - Set featured images for products
-  - Background images for featured products
-  - Image gallery for product details
-
 ## Tech Stack
 
 - Frontend:
@@ -70,7 +64,7 @@ A modern React-based e-commerce platform for wholesale footwear distribution.
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/devmac505/E-commerce-website.git
+git clone https://github.com/yourusername/your-repo-name.git
 ```
 
 2. Install dependencies:
@@ -110,9 +104,6 @@ npm run prod
 - `PUT /api/products/:id` - Update product
 - `DELETE /api/products/:id` - Delete product
 - `PUT /api/products/:id/inventory` - Update product inventory
-- `POST /api/products/:id/image` - Upload product image
-- `PUT /api/products/:id/featured-image` - Set featured image
-- `DELETE /api/products/:id/image/:imageIndex` - Delete product image
 
 ### Users
 

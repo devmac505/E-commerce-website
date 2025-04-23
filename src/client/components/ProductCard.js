@@ -51,34 +51,40 @@ function ProductCard({ product }) {
     }, 800);
   };
 
+  // Get the appropriate image based on product name
+  const getProductImage = () => {
+    // Map product names to their image files
+    const imageMap = {
+      'Urban Combat': '/images/urban-combat.jpg',
+      'Wilderness Hiker': '/images/wilderness-hiking.jpg',
+      'Elegant Heel': '/images/elegant-heel.jpg',
+      'Executive Oxford': '/images/Executive-Oxford.jpg'
+    };
+
+    // Return the mapped image or use the product's image property as fallback
+    return imageMap[product.name] || product.image || `/images/${product.category?.toLowerCase()}.jpg`;
+  };
+
+  // Fallback image if the product image fails to load
+  const handleImageError = (e) => {
+    e.target.onerror = null;
+    e.target.src = `/images/product-placeholder.svg`;
+  };
+
   return (
-    <div className="product-card" data-product-id={product.id}>
+    <Link to={`/product/${product.id}`} className="product-card" data-product-id={product.id}>
       <div className="product-image">
-        <img src={product.image} alt={product.name} />
+        <img
+          src={getProductImage()}
+          alt={product.name}
+          onError={handleImageError}
+        />
       </div>
       <div className="product-info">
         <h3 className="product-name">{product.name}</h3>
         <p className="product-price">{formatCurrency(product.price)}</p>
-        <div className="product-category">
-          {product.category} • {product.gender}
-        </div>
-        <div className="product-actions">
-          <Link to={`/product/${product.id}`} className="btn btn-primary">
-            View Details
-          </Link>
-          <button
-            className={`btn btn-secondary add-to-cart ${isAddingToCart ? 'add-to-cart-animation' : ''}`}
-            onClick={handleAddToCart}
-          >
-            {isAddingToCart ? (
-              <i className="fas fa-check success-checkmark"></i>
-            ) : (
-              <i className="fas fa-shopping-cart"></i>
-            )}
-          </button>
-        </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

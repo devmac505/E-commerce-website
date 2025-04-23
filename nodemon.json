@@ -1,0 +1,18 @@
+{
+  "ignore": [
+    "node_modules/*",
+    "public/dist/*",
+    "public/index.html",
+    "src/client/*"
+  ],
+  "watch": [
+    "src/app.js",
+    "src/config/*",
+    "src/controllers/*",
+    "src/middleware/*",
+    "src/models/*",
+    "src/routes/*",
+    "src/utils/*"
+  ],
+  "ext": "js,json"
+}

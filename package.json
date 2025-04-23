@@ -6,7 +6,10 @@
     "start": "nodemon src/app.js",
     "client": "webpack serve --mode development",
     "build": "webpack --mode production",
+    "analyze": "cross-env ANALYZE=true webpack --mode production",
     "dev": "concurrently \"npm run start\" \"npm run client\"",
+    "serve": "node server.js",
+    "build-serve": "npm run build && npm run serve",
     "prod": "npm run build && NODE_ENV=production node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,6 +26,7 @@
   "homepage": "https://github.com/devmac505/E-commerce-website#readme",
   "description": "",
   "dependencies": {
+    "@babel/runtime": "^7.27.0",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
@@ -39,15 +43,22 @@
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",
+    "@babel/plugin-transform-runtime": "^7.26.10",
     "@babel/preset-env": "^7.26.9",
     "@babel/preset-react": "^7.26.3",
     "babel-loader": "^10.0.0",
     "concurrently": "^9.1.2",
+    "core-js": "^3.41.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^7.1.2",
+    "css-minimizer-webpack-plugin": "^7.0.2",
     "html-webpack-plugin": "^5.6.3",
+    "image-webpack-loader": "^8.1.0",
+    "mini-css-extract-plugin": "^2.9.2",
     "nodemon": "^3.1.9",
     "style-loader": "^4.0.0",
     "webpack": "^5.99.6",
+    "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.1"
   }

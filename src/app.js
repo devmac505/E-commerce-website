@@ -43,7 +43,9 @@ app.use('/api/orders', orderRoutes);
 // Serve React app if available
 if (process.env.NODE_ENV === 'production') {
   // Serve React build files
-  app.use(express.static(path.join(__dirname, '../public/dist')));
+  app.use(express.static(path.join(__dirname, '../public/dist'), {
+    maxAge: '30d' // Cache static assets for 30 days
+  }));
 }
 
 // Serve React app for all routes that don't match an API route or static file
@@ -55,6 +57,7 @@ app.use((req, res, next) => {
 
   // Serve the React app for client-side routing
   if (req.method === 'GET') {
+    res.set('Content-Type', 'text/html');
     res.sendFile(path.resolve(__dirname, '../public/index.html'));
   } else {
     next();
