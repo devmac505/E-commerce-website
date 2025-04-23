@@ -40,6 +40,11 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
 
+// Serve static files from the dist directory with higher priority
+app.use('/dist', express.static(path.join(__dirname, '../public/dist'), {
+  maxAge: '30d' // Cache static assets for 30 days
+}));
+
 // Serve React app if available
 if (process.env.NODE_ENV === 'production') {
   // Serve React build files
@@ -55,6 +60,7 @@ app.use((req, res, next) => {
     return next();
   }
 
+  console.log(`Serving React app for path: ${req.path}`);
   // Serve the React app for client-side routing
   if (req.method === 'GET') {
     res.set('Content-Type', 'text/html');

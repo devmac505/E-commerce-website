@@ -1,30 +1,63 @@
 // Base API URL - use environment variable in production, relative path in development
-const API_BASE_URL = process.env.NODE_ENV === 'production'
-  ? `${process.env.REACT_APP_API_URL || 'https://e-commerce-backend-iahp.onrender.com'}/api`
-  : '/api';
+// Check if we're running in production by looking for the API URL environment variable
+// This is more reliable than checking NODE_ENV which might not be correctly passed to the client
+const isProduction = typeof process.env.REACT_APP_API_URL !== 'undefined';
+const API_BASE_URL = isProduction
+  ? `${process.env.REACT_APP_API_URL}/api`
+  : '/api'; // Default to local development
+
+// Only log in development
+if (process.env.NODE_ENV !== 'production') {
+  console.log(`Using API base URL: ${API_BASE_URL}`);
+}
+
+/**
+ * Securely retrieves the authentication token
+ * In a production environment, consider using HttpOnly cookies instead
+ * or implementing additional security measures
+ */
+const getAuthToken = () => {
+  // For now, we're still using localStorage but with a wrapper function
+  // that can be updated later to use more secure storage methods
+  return localStorage.getItem('token');
+};
+
 
 // Helper function to handle API responses
 const handleResponse = async (response) => {
-  console.log('API Response Status:', response.status);
+  // Only log in development
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('API Response Status:', response.status);
+  }
 
   if (!response.ok) {
     // Try to get error message from response
     try {
       const errorData = await response.json();
-      console.error('API Error Data:', errorData);
+      // Only log error details in development
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('API Error Data:', errorData);
+      }
       throw new Error(errorData.message || `API error: ${response.status}`);
     } catch (e) {
-      console.error('Error parsing API error response:', e);
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('Error parsing API error response:', e);
+      }
       throw new Error(`API error: ${response.status}`);
     }
   }
 
   try {
     const data = await response.json();
-    console.log('API Response Data:', data);
+    // Only log in development and avoid logging sensitive data
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('API Response received successfully');
+    }
     return data;
   } catch (e) {
-    console.error('Error parsing API response JSON:', e);
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('Error parsing API response JSON:', e);
+    }
     throw new Error('Invalid JSON response from API');
   }
 };
@@ -68,7 +101,8 @@ export const AuthAPI = {
   // Get user profile
   getProfile: async () => {
     try {
-      const token = localStorage.getItem('token');
+      // Get token from secure storage
+      const token = getAuthToken();
       if (!token) {
         throw new Error('Authentication required');
       }
@@ -80,7 +114,9 @@ export const AuthAPI = {
       });
       return handleResponse(response);
     } catch (error) {
-      console.error('Error fetching profile:', error);
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('Error fetching profile:', error);
+      }
       throw error;
     }
   }
@@ -91,13 +127,19 @@ export const ProductAPI = {
   // Get all products with filters
   getProducts: async (params = {}) => {
     const queryString = new URLSearchParams(params).toString();
-    console.log(`Fetching products with URL: ${API_BASE_URL}/products?${queryString}`);
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(`Fetching products with query params: ${queryString}`);
+    }
     try {
       const response = await fetch(`${API_BASE_URL}/products?${queryString}`);
-      console.log('Fetch response received:', response.status);
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Fetch response received:', response.status);
+      }
       return handleResponse(response);
     } catch (error) {
-      console.error('Network error fetching products:', error);
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('Network error fetching products:', error);
+      }
       throw error;
     }
   },
@@ -108,7 +150,9 @@ export const ProductAPI = {
       const response = await fetch(`${API_BASE_URL}/products/${productId}`);
       return handleResponse(response);
     } catch (error) {
-      console.error('Error fetching product:', error);
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('Error fetching product:', error);
+      }
       throw error;
     }
   },
@@ -119,7 +163,9 @@ export const ProductAPI = {
       const response = await fetch(`${API_BASE_URL}/categories`);
       return handleResponse(response);
     } catch (error) {
-      console.error('Error fetching categories:', error);
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('Error fetching categories:', error);
+      }
       throw error;
     }
   },
@@ -130,7 +176,9 @@ export const ProductAPI = {
       const response = await fetch(`${API_BASE_URL}/products/related/${productId}?limit=${limit}`);
       return handleResponse(response);
     } catch (error) {
-      console.error('Error fetching related products:', error);
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('Error fetching related products:', error);
+      }
       throw error;
     }
   },
@@ -141,7 +189,9 @@ export const ProductAPI = {
       const response = await fetch(`${API_BASE_URL}/products/${productId}/reviews`);
       return handleResponse(response);
     } catch (error) {
-      console.error('Error fetching product reviews:', error);
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('Error fetching product reviews:', error);
+      }
       throw error;
     }
   }
@@ -152,7 +202,8 @@ export const OrderAPI = {
   // Create a new order
   createOrder: async (orderData) => {
     try {
-      const token = localStorage.getItem('token');
+      // Get token from secure storage
+      const token = getAuthToken();
       if (!token) {
         throw new Error('Authentication required');
       }
@@ -167,7 +218,9 @@ export const OrderAPI = {
       });
       return handleResponse(response);
     } catch (error) {
-      console.error('Error creating order:', error);
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('Error creating order:', error);
+      }
       throw error;
     }
   },
@@ -175,7 +228,8 @@ export const OrderAPI = {
   // Get user orders
   getUserOrders: async () => {
     try {
-      const token = localStorage.getItem('token');
+      // Get token from secure storage
+      const token = getAuthToken();
       if (!token) {
         throw new Error('Authentication required');
       }
@@ -187,7 +241,9 @@ export const OrderAPI = {
       });
       return handleResponse(response);
     } catch (error) {
-      console.error('Error fetching orders:', error);
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('Error fetching orders:', error);
+      }
       throw error;
     }
   }
