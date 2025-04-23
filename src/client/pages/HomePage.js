@@ -9,13 +9,8 @@ function HomePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Set hero banner background image when component mounts
-  useEffect(() => {
-    const heroElement = document.querySelector('.hero');
-    if (heroElement) {
-      heroElement.style.backgroundImage = `linear-gradient(rgba(26, 34, 56, 0.7), rgba(26, 34, 56, 0.7)), url('/images/hero-banner.jpg')`;
-    }
-  }, []);
+  // We'll use a different approach for the hero banner image
+  // Instead of setting it via JavaScript, we'll use a similar approach to the category cards
 
   // Fetch featured products and categories when component mounts
   useEffect(() => {
@@ -78,35 +73,35 @@ function HomePage() {
     return [
       {
         id: 'sample1',
-        name: 'Athletic Running Shoes',
-        price: 79.99,
-        image: '/images/products/running-shoes.jpg',
-        category: 'Athletic',
+        name: 'Urban Combat',
+        price: 119.99,
+        image: '/images/urban-combat.jpg',
+        category: 'Boots',
         gender: 'unisex'
       },
       {
         id: 'sample2',
-        name: 'Casual Leather Loafers',
-        price: 59.99,
-        image: '/images/products/loafers.jpg',
-        category: 'Casual',
+        name: 'Wilderness Hiker',
+        price: 149.99, // Updated to match the image
+        image: '/images/wilderness-hiking.jpg',
+        category: 'Boots',
         gender: 'men'
       },
       {
         id: 'sample3',
-        name: 'Formal Business Oxfords',
-        price: 89.99,
-        image: '/images/products/oxfords.jpg',
+        name: 'Elegant Heel',
+        price: 99.99,
+        image: '/images/elegant-heel.jpg',
         category: 'Formal',
-        gender: 'men'
+        gender: 'women'
       },
       {
         id: 'sample4',
-        name: 'Women\'s Fashion Boots',
-        price: 99.99,
-        image: '/images/products/boots.jpg',
-        category: 'Boots',
-        gender: 'women'
+        name: 'Executive Oxford',
+        price: 129.99,
+        image: '/images/Executive-Oxford.jpg',
+        category: 'Formal',
+        gender: 'men'
       }
     ];
   };
@@ -114,16 +109,19 @@ function HomePage() {
   // Sample categories for fallback
   const getSampleCategories = () => {
     return [
-      { _id: 'athletic', name: 'Athletic', image: '/images/categories/athletic.jpg' },
-      { _id: 'casual', name: 'Casual', image: '/images/categories/casual.jpg' },
-      { _id: 'formal', name: 'Formal', image: '/images/categories/formal.jpg' },
-      { _id: 'boots', name: 'Boots', image: '/images/categories/boots.jpg' }
+      { _id: 'athletic', name: 'Athletic', image: '/images/athletic.jpg' },
+      { _id: 'casual', name: 'Casual', image: '/images/casual.jpg' },
+      { _id: 'formal', name: 'Formal', image: '/images/formal.jpg' },
+      { _id: 'boots', name: 'Boots', image: '/images/boots.jpg' }
     ];
   };
 
   return (
     <>
       <div className="hero">
+        <div className="hero-image">
+          <img src="/images/hero-banner.jpg" alt="Wholesale Footwear" />
+        </div>
         <div className="container">
           <div className="hero-content">
             <h1 className="fade-in">Wholesale Footwear Solutions for Your Business</h1>
@@ -176,7 +174,9 @@ function HomePage() {
 
       <section className="featured-products-section">
         <div className="container">
-          <h2 className="section-title">Featured Products</h2>
+          <div style={{ textAlign: 'left' }}>
+            <h2 className="section-title">Featured Products</h2>
+          </div>
           <p className="section-description">
             Explore our most popular wholesale footwear options
           </p>
@@ -225,7 +225,7 @@ function HomePage() {
                 >
                   <div className="category-image">
                     <img
-                      src={category.image || `https://via.placeholder.com/300x200/1a2238/ffffff?text=${category.name}`}
+                      src={category.image || `/images/${category.name.toLowerCase()}.jpg`}
                       alt={`${category.name} Shoes`}
                       onError={(e) => {
                         // Fallback image if the category image fails to load

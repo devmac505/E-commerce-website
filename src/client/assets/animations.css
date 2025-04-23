@@ -185,17 +185,7 @@
   transition: opacity 0.3s;
 }
 
-/* Loading Spinner */
-.loading-spinner {
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  border: 3px solid rgba(255, 106, 61, 0.3);
-  border-radius: 50%;
-  border-top-color: var(--accent);
-  animation: spin 1s ease-in-out infinite;
-}
-
+/* Loading Spinner Animation */
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -295,6 +285,59 @@
 .toast-hidden {
   transform: translateX(120%);
   opacity: 0;
+}
+
+/* Toast Color Classes */
+.bg-green-100 {
+  background-color: #d1fae5;
+  border-color: #10b981;
+}
+
+.bg-red-100 {
+  background-color: #fee2e2;
+  border-color: #ef4444;
+}
+
+.bg-yellow-100 {
+  background-color: #fef3c7;
+  border-color: #f59e0b;
+}
+
+.bg-blue-100 {
+  background-color: #dbeafe;
+  border-color: #3b82f6;
+}
+
+.text-green-500, .text-green-700 {
+  color: #10b981;
+}
+
+.text-red-500, .text-red-700 {
+  color: #ef4444;
+}
+
+.text-yellow-500, .text-yellow-700 {
+  color: #f59e0b;
+}
+
+.text-blue-500, .text-blue-700 {
+  color: #3b82f6;
+}
+
+.mr-2 {
+  margin-right: 8px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 /* Mobile Menu Animations */
