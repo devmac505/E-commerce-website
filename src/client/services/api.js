@@ -1,7 +1,16 @@
 // Base API URL - use environment variable in production, relative path in development
-const API_BASE_URL = process.env.NODE_ENV === 'production'
-  ? `${process.env.REACT_APP_API_URL || 'https://e-commerce-backend-iahp.onrender.com'}/api`
-  : '/api';
+// Check if we're running in production by looking for the API URL environment variable
+// This is more reliable than checking NODE_ENV which might not be correctly passed to the client
+const isProduction = typeof process.env.REACT_APP_API_URL !== 'undefined';
+const API_BASE_URL = isProduction
+  ? `${process.env.REACT_APP_API_URL}/api`
+  : (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1')
+    ? 'https://e-commerce-backend-iahp.onrender.com/api' // Fallback for production
+    : '/api'; // Local development
+
+// Log the API base URL for debugging
+console.log(`Using API base URL: ${API_BASE_URL}`);
+
 
 // Helper function to handle API responses
 const handleResponse = async (response) => {

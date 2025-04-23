@@ -154,7 +154,7 @@ module.exports = {
     }),
     // Define environment variables for the client
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      // Don't redefine NODE_ENV as webpack sets it automatically based on mode
       'process.env.REACT_APP_API_URL': JSON.stringify(process.env.REACT_APP_API_URL || 'https://e-commerce-backend-iahp.onrender.com')
     }),
     // Comment out the line below when not analyzing the bundle
