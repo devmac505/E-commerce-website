@@ -1,5 +1,7 @@
-// Base API URL
-const API_BASE_URL = '/api';
+// Base API URL - use environment variable in production, relative path in development
+const API_BASE_URL = process.env.NODE_ENV === 'production'
+  ? `${process.env.REACT_APP_API_URL || 'https://e-commerce-backend-iahp.onrender.com'}/api`
+  : '/api';
 
 // Helper function to handle API responses
 const handleResponse = async (response) => {
