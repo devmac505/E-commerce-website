@@ -1,10 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 require('dotenv').config();
 
 module.exports = {
@@ -22,7 +18,10 @@ module.exports = {
     errorDetails: true
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    fallback: {
+      'react-icons/fa': false
+    }
   },
   module: {
     rules: [
@@ -36,12 +35,12 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'style-loader',
           {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
-              sourceMap: process.env.NODE_ENV !== 'production'
+              sourceMap: true
             }
           }
         ]
@@ -53,50 +52,11 @@ module.exports = {
           dataUrlCondition: {
             maxSize: 8 * 1024 // 8kb - inline smaller images as data URLs
           }
-        },
-        use: [
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              mozjpeg: {
-                progressive: true,
-                quality: 65
-              },
-              optipng: {
-                enabled: true,
-              },
-              pngquant: {
-                quality: [0.65, 0.90],
-                speed: 4
-              },
-              gifsicle: {
-                interlaced: false,
-              },
-              webp: {
-                quality: 75
-              }
-            }
-          }
-        ]
+        }
       }
     ]
   },
   optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          compress: {
-            drop_console: true,
-          },
-          output: {
-            comments: false,
-          },
-        },
-        extractComments: false,
-      }),
-      new CssMinimizerPlugin(),
-    ],
     splitChunks: {
       chunks: 'all',
       maxInitialRequests: Infinity,
@@ -151,18 +111,12 @@ module.exports = {
         minifyURLs: true,
       }
     }),
-    new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].css',
-      chunkFilename: '[id].[contenthash].css',
-    }),
     // Define environment variables for the client
     new webpack.DefinePlugin({
       // Don't redefine NODE_ENV as webpack sets it automatically based on mode
       'process.env.REACT_APP_API_URL': JSON.stringify(process.env.REACT_APP_API_URL || 'https://e-commerce-backend-iahp.onrender.com')
-    }),
-    // Comment out the line below when not analyzing the bundle
-    process.env.ANALYZE && new BundleAnalyzerPlugin()
-  ].filter(Boolean),
+    })
+  ],
   devServer: {
     static: {
       directory: path.join(__dirname, 'public'),
@@ -190,7 +144,7 @@ module.exports = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
       'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
-      'X-Content-Type-Options': 'nosniff'
+      'Content-Security-Policy': "default-src 'self'; connect-src 'self' http://localhost:4000 https://e-commerce-backend-iahp.onrender.com; img-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com"
     },
     proxy: [
       {

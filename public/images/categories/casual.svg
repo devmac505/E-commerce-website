@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="300px" height="200px" viewBox="0 0 300 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Casual Category</title>
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#1a2238" offset="0%"></stop>
+            <stop stop-color="#0d1119" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Background" fill="url(#linearGradient-1)" x="0" y="0" width="300" height="200"></rect>
+        <g id="Casual-Icon" transform="translate(100, 50)" fill="#FFFFFF" fill-opacity="0.8">
+            <rect id="Shoe-Base" x="10" y="60" width="80" height="20" rx="5"></rect>
+            <path d="M20,60 L20,40 C20,30 30,20 40,20 L60,20 C70,20 80,30 80,40 L80,60" id="Shoe-Top" stroke="#FFFFFF" stroke-width="5"></path>
+            <circle id="Dot1" cx="30" cy="40" r="5"></circle>
+            <circle id="Dot2" cx="50" cy="40" r="5"></circle>
+            <circle id="Dot3" cx="70" cy="40" r="5"></circle>
+        </g>
+        <text id="Casual" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFFFFF">
+            <tspan x="125" y="180">Casual</tspan>
+        </text>
+    </g>
+</svg>

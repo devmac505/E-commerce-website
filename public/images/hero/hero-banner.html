@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hero Banner</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    .hero-container {
+      width: 1200px;
+      height: 500px;
+      background: linear-gradient(135deg, #1a2238 0%, #0d1119 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255,106,61,0.1) 0%, rgba(255,106,61,0.05) 100%);
+    }
+    .circle1 {
+      position: absolute;
+      top: 20px;
+      left: 120px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background-color: rgba(255,106,61,0.1);
+    }
+    .circle2 {
+      position: absolute;
+      bottom: -20px;
+      right: 80px;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background-color: rgba(255,106,61,0.1);
+    }
+    .shoe1 {
+      position: absolute;
+      bottom: 50px;
+      right: 250px;
+      width: 200px;
+      height: 150px;
+      background-color: rgba(255,255,255,0.1);
+      border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%;
+    }
+    .shoe2 {
+      position: absolute;
+      bottom: 60px;
+      right: 450px;
+      width: 150px;
+      height: 100px;
+      background-color: rgba(255,255,255,0.1);
+      border-radius: 60% 40% 50% 50% / 40% 40% 60% 60%;
+    }
+    .outline1 {
+      position: absolute;
+      top: 150px;
+      right: 220px;
+      width: 180px;
+      height: 150px;
+      border: 2px solid #ff6a3d;
+      border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%;
+    }
+    .outline2 {
+      position: absolute;
+      top: 200px;
+      right: 400px;
+      width: 140px;
+      height: 100px;
+      border: 2px solid #ff6a3d;
+      border-radius: 60% 40% 50% 50% / 40% 40% 60% 60%;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero-container">
+    <div class="pattern"></div>
+    <div class="overlay"></div>
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+    <div class="shoe1"></div>
+    <div class="shoe2"></div>
+    <div class="outline1"></div>
+    <div class="outline2"></div>
+  </div>
+</body>
+</html>

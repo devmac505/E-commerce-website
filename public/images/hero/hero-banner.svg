@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1200" height="500" viewBox="0 0 1200 500" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="500" fill="#1a2238"/>
+  <text x="600" y="250" font-family="Arial" font-size="48" text-anchor="middle" fill="#ffffff">Hero Banner Placeholder</text>
+  <text x="600" y="310" font-family="Arial" font-size="24" text-anchor="middle" fill="#ff6a3d">Replace with your own image</text>
+</svg>

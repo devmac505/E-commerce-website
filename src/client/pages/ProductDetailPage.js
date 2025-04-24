@@ -4,6 +4,7 @@ import { ProductAPI } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import ImageZoom from '../components/ImageZoom';
 import ProductReviews from '../components/ProductReviews';
+import { getProductImagePath } from '../utils/imageUtils';
 
 function ProductDetailPage() {
   const { id } = useParams();
@@ -50,7 +51,7 @@ function ProductDetailPage() {
                   price: product.basePrice,
                   image: product.images && product.images.length > 0
                     ? product.images[0]
-                    : '/images/products/placeholder.svg',
+                    : getProductImagePath(product.name),
                   category: product.category?.name || 'Unknown',
                   gender: product.specifications?.gender || 'unisex'
                 }));
@@ -228,7 +229,7 @@ function ProductDetailPage() {
         id: product._id,
         name: product.name,
         price: product.basePrice,
-        image: product.images && product.images.length > 0 ? product.images[0] : '/images/products/placeholder.svg',
+        image: product.images && product.images.length > 0 ? product.images[0] : getProductImagePath(product.name),
         quantity: quantity
       });
     }
@@ -284,7 +285,7 @@ function ProductDetailPage() {
         <div className="product-gallery">
           {/* Use ImageZoom component for main image */}
           <ImageZoom
-            src={product.images?.[activeImage] || '/images/products/placeholder.svg'}
+            src={product.images?.[activeImage] || getProductImagePath(product.name)}
             alt={product.name}
           />
 

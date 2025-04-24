@@ -5,7 +5,9 @@ const {
   createProduct,
   getProductById,
   updateProductInventory,
-  updatePriceTiers
+  updatePriceTiers,
+  searchProducts,
+  getRelatedProducts
 } = require('../controllers/productController');
 const { getCategories } = require('../controllers/categoryController');
 const {
@@ -16,18 +18,27 @@ const {
 const { protect, authorize } = require('../middleware/auth');
 const { validate, productValidation } = require('../middleware/validator');
 const upload = require('../middleware/upload');
+const { cacheMiddleware } = require('../middleware/cache');
 
 // Public routes
 router.route('/')
-  .get(getProducts)
+  .get(cacheMiddleware(300), getProducts) // Cache for 5 minutes
   .post(protect, authorize('admin'), validate(productValidation), createProduct);
 
+// Search route
+router.route('/search')
+  .get(cacheMiddleware(300), searchProducts); // Cache for 5 minutes
+
+// Related products route
+router.route('/related/:id')
+  .get(cacheMiddleware(600), getRelatedProducts); // Cache for 10 minutes
+
 router.route('/:id')
-  .get(getProductById);
+  .get(cacheMiddleware(600), getProductById); // Cache for 10 minutes
 
 // Categories route
 router.route('/categories')
-  .get(getCategories);
+  .get(cacheMiddleware(1800), getCategories); // Cache for 30 minutes
 
 // Protected admin routes
 router.route('/:productId/inventory')

@@ -70,6 +70,10 @@ const productSchema = new mongoose.Schema({
   isActive: {
     type: Boolean,
     default: true
+  },
+  featured: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true
@@ -78,4 +82,3 @@ const productSchema = new mongoose.Schema({
 productSchema.index({ name: 'text', description: 'text', brand: 'text' });
 
 module.exports = mongoose.model('Product', productSchema);
-

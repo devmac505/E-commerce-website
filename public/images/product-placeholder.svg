@@ -1,8 +1,0 @@
-<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
-  <rect width="400" height="400" fill="#f0f0f0"/>
-  <text x="200" y="200" font-family="Arial" font-size="30" text-anchor="middle" fill="#666">Product Image</text>
-  <g fill="none" stroke="#ddd" stroke-width="2">
-    <rect x="50" y="50" width="300" height="300"/>
-    <path d="M50,50 L350,350 M350,50 L50,350"/>
-  </g>
-</svg> 

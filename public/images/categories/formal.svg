@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="300px" height="200px" viewBox="0 0 300 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Formal Category</title>
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#1a2238" offset="0%"></stop>
+            <stop stop-color="#0d1119" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Background" fill="url(#linearGradient-1)" x="0" y="0" width="300" height="200"></rect>
+        <g id="Formal-Icon" transform="translate(100, 50)" fill="#FFFFFF" fill-opacity="0.8">
+            <path d="M10,60 L30,20 L70,20 L90,60 L80,80 L20,80 L10,60 Z" id="Dress-Shoe" stroke="#FFFFFF" stroke-width="2"></path>
+            <path d="M30,20 C30,20 50,30 70,20" id="Shoe-Top" stroke="#FFFFFF" stroke-width="2"></path>
+            <path d="M20,80 L10,60 L30,20" id="Left-Side" stroke="#FFFFFF" stroke-width="2"></path>
+            <path d="M80,80 L90,60 L70,20" id="Right-Side" stroke="#FFFFFF" stroke-width="2"></path>
+        </g>
+        <text id="Formal" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFFFFF">
+            <tspan x="125" y="180">Formal</tspan>
+        </text>
+    </g>
+</svg>

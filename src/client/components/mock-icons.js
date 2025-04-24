@@ -1,0 +1,21 @@
+// Mock implementation of react-icons/fa
+export const FaShoppingCart = () => '🛒';
+export const FaUser = () => '👤';
+export const FaBars = () => '☰';
+export const FaTimes = () => '✕';
+export const FaStar = () => '★';
+export const FaFacebook = () => 'FB';
+export const FaTwitter = () => 'TW';
+export const FaInstagram = () => 'IG';
+export const FaLinkedin = () => 'LI';
+export const FaMapMarkerAlt = () => '📍';
+export const FaPhone = () => '📞';
+export const FaEnvelope = () => '✉️';
+export const FaClock = () => '🕒';
+export const FaCheckCircle = () => '✅';
+export const FaHandshake = () => '🤝';
+export const FaAward = () => '🏆';
+export const FaLeaf = () => '🌿';
+export const FaUsers = () => '👥';
+export const FaEye = () => '👁️';
+export const FaEyeSlash = () => '👁️‍🗨️';

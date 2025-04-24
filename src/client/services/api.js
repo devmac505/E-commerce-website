@@ -1,10 +1,9 @@
 // Base API URL - use environment variable in production, relative path in development
 // Check if we're running in production by looking for the API URL environment variable
 // This is more reliable than checking NODE_ENV which might not be correctly passed to the client
-const isProduction = typeof process.env.REACT_APP_API_URL !== 'undefined';
-const API_BASE_URL = isProduction
-  ? `${process.env.REACT_APP_API_URL}/api`
-  : '/api'; // Default to local development
+
+// Use relative URL for API requests to avoid CORS and CSP issues
+const API_BASE_URL = '/api';
 
 // Only log in development
 if (process.env.NODE_ENV !== 'production') {
@@ -38,8 +37,19 @@ const handleResponse = async (response) => {
       if (process.env.NODE_ENV !== 'production') {
         console.error('API Error Data:', errorData);
       }
+
+      // Handle validation errors
+      if (errorData.details) {
+        const errorMessages = Object.values(errorData.details).join(', ');
+        throw new Error(errorMessages || errorData.message || `API error: ${response.status}`);
+      }
+
       throw new Error(errorData.message || `API error: ${response.status}`);
     } catch (e) {
+      if (e.message && e.message !== `API error: ${response.status}`) {
+        throw e; // Rethrow the error with the message we created
+      }
+
       if (process.env.NODE_ENV !== 'production') {
         console.error('Error parsing API error response:', e);
       }
@@ -48,6 +58,14 @@ const handleResponse = async (response) => {
   }
 
   try {
+    // Check if response is HTML instead of JSON
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('text/html')) {
+      const text = await response.text();
+      console.error('Received HTML instead of JSON:', text.substring(0, 150) + '...');
+      throw new Error('Server returned HTML instead of JSON. The API endpoint may not be configured correctly.');
+    }
+
     const data = await response.json();
     // Only log in development and avoid logging sensitive data
     if (process.env.NODE_ENV !== 'production') {
@@ -58,7 +76,10 @@ const handleResponse = async (response) => {
     if (process.env.NODE_ENV !== 'production') {
       console.error('Error parsing API response JSON:', e);
     }
-    throw new Error('Invalid JSON response from API');
+    if (e.message.includes('Unexpected token')) {
+      throw new Error('Invalid response from server. Please check the API configuration.');
+    }
+    throw e;
   }
 };
 
@@ -67,6 +88,9 @@ export const AuthAPI = {
   // Register a new user
   register: async (userData) => {
     try {
+      console.log('API_BASE_URL:', API_BASE_URL);
+      console.log('Full URL:', `${API_BASE_URL}/users/register`);
+
       const response = await fetch(`${API_BASE_URL}/users/register`, {
         method: 'POST',
         headers: {
@@ -74,6 +98,10 @@ export const AuthAPI = {
         },
         body: JSON.stringify(userData)
       });
+
+      console.log('Raw response status:', response.status);
+      console.log('Raw response headers:', [...response.headers.entries()]);
+
       return handleResponse(response);
     } catch (error) {
       console.error('Error registering user:', error);
@@ -84,6 +112,10 @@ export const AuthAPI = {
   // Login user
   login: async (credentials) => {
     try {
+      console.log('Login API called with:', { email: credentials.email, password: '***' });
+      console.log('API_BASE_URL:', API_BASE_URL);
+      console.log('Full URL:', `${API_BASE_URL}/users/login`);
+
       const response = await fetch(`${API_BASE_URL}/users/login`, {
         method: 'POST',
         headers: {
@@ -91,6 +123,10 @@ export const AuthAPI = {
         },
         body: JSON.stringify(credentials)
       });
+
+      console.log('Raw login response status:', response.status);
+      console.log('Raw login response headers:', [...response.headers.entries()]);
+
       return handleResponse(response);
     } catch (error) {
       console.error('Error logging in:', error);

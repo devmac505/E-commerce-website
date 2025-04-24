@@ -31,11 +31,11 @@ const userSchema = new mongoose.Schema({
   },
   companyName: {
     type: String,
-    required: [true, 'Please add a company name']
+    required: false
   },
   phone: {
     type: String,
-    required: [true, 'Please add a phone number']
+    required: false
   },
   address: {
     street: String,

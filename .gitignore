@@ -20,6 +20,11 @@ pids
 public/uploads/*
 !public/uploads/.gitkeep
 
+# Build files
+public/*.hot-update.*
+public/**/*.hot-update.*
+public/dist/
+
 # IDE specific files
 .idea/
 .vscode/

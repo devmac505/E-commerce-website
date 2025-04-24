@@ -12,6 +12,7 @@ const { validate, registerValidation, loginValidation } = require('../middleware
 
 // Public routes
 router.post('/register', validate(registerValidation), registerUser);
+router.post('/register-test', registerUser); // Test route without validation
 router.post('/login', validate(loginValidation), loginUser);
 
 // Protected routes

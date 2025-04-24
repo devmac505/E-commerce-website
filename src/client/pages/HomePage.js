@@ -1,16 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import ProductCard from '../components/ProductCard';
 import { ProductAPI } from '../services/api';
+import { subscribeToAuthState } from '../services/authState';
+import { getProductImagePath, getCategoryImagePath } from '../utils/imageUtils';
 
 function HomePage() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [showWelcome, setShowWelcome] = useState(false);
 
-  // We'll use a different approach for the hero banner image
-  // Instead of setting it via JavaScript, we'll use a similar approach to the category cards
+
+  useEffect(() => {
+    // This will be called whenever auth state changes
+    const handleAuthStateChange = (authState) => {
+      console.log('HomePage received auth state update:', authState);
+      setIsLoggedIn(authState.isLoggedIn);
+      setUserName(authState.userName);
+    };
+
+    // Subscribe to auth state changes and get unsubscribe function
+    const unsubscribe = subscribeToAuthState(handleAuthStateChange);
+
+    // Check if this is a new login
+    const loginTimestamp = localStorage.getItem('loginTimestamp');
+    if (loginTimestamp) {
+      const loginTime = parseInt(loginTimestamp, 10);
+      const currentTime = Date.now();
+
+      // If login was within the last 2 seconds, show welcome message
+      if (currentTime - loginTime < 2000) {
+        setShowWelcome(true);
+
+        // Hide welcome message after 5 seconds
+        setTimeout(() => {
+          setShowWelcome(false);
+        }, 5000);
+
+        // Clear the timestamp
+        localStorage.removeItem('loginTimestamp');
+      }
+    }
+
+    // Cleanup: unsubscribe when component unmounts
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   // Fetch featured products and categories when component mounts
   useEffect(() => {
@@ -25,9 +64,8 @@ function HomePage() {
             id: product._id,
             name: product.name,
             price: product.basePrice,
-            image: product.images && product.images.length > 0
-              ? product.images[0]
-              : '/images/products/placeholder.svg',
+            // Use utility function for consistent image paths
+            image: getProductImagePath(product.name),
             category: product.category?.name || 'Unknown',
             gender: product.specifications?.gender || 'unisex'
           }));
@@ -75,23 +113,23 @@ function HomePage() {
         id: 'sample1',
         name: 'Urban Combat',
         price: 119.99,
-        image: '/images/urban-combat.jpg',
+        image: getProductImagePath('Urban Combat'),
         category: 'Boots',
         gender: 'unisex'
       },
       {
         id: 'sample2',
         name: 'Wilderness Hiker',
-        price: 149.99, // Updated to match the image
-        image: '/images/wilderness-hiking.jpg',
-        category: 'Boots',
+        price: 149.99,
+        image: getProductImagePath('Wilderness Hiker'),
+        category: 'Athletic',
         gender: 'men'
       },
       {
         id: 'sample3',
         name: 'Elegant Heel',
-        price: 99.99,
-        image: '/images/elegant-heel.jpg',
+        price: 89.99,
+        image: getProductImagePath('Elegant Heel'),
         category: 'Formal',
         gender: 'women'
       },
@@ -99,7 +137,7 @@ function HomePage() {
         id: 'sample4',
         name: 'Executive Oxford',
         price: 129.99,
-        image: '/images/Executive-Oxford.jpg',
+        image: getProductImagePath('Executive Oxford'),
         category: 'Formal',
         gender: 'men'
       }
@@ -109,25 +147,37 @@ function HomePage() {
   // Sample categories for fallback
   const getSampleCategories = () => {
     return [
-      { _id: 'athletic', name: 'Athletic', image: '/images/athletic.jpg' },
-      { _id: 'casual', name: 'Casual', image: '/images/casual.jpg' },
-      { _id: 'formal', name: 'Formal', image: '/images/formal.jpg' },
-      { _id: 'boots', name: 'Boots', image: '/images/boots.jpg' }
+      { _id: 'athletic', name: 'Athletic', image: getCategoryImagePath('Athletic') },
+      { _id: 'casual', name: 'Casual', image: getCategoryImagePath('Casual') },
+      { _id: 'formal', name: 'Formal', image: getCategoryImagePath('Formal') },
+      { _id: 'boots', name: 'Boots', image: getCategoryImagePath('Boots') }
     ];
   };
 
   return (
     <>
-      <div className="hero">
+      {showWelcome && (
+        <div className="container" style={{ marginTop: '1rem' }}>
+          <div className="notification notification-success">
+            <strong>Welcome, {userName}!</strong> You have successfully logged in to your account.
+          </div>
+        </div>
+      )}
+
+      <div className="hero" style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}>
         <div className="hero-image">
-          <img src="/images/hero-banner.jpg" alt="Wholesale Footwear" />
+          <div className="hero-overlay"></div>
         </div>
         <div className="container">
           <div className="hero-content">
-            <h1 className="fade-in">Wholesale Footwear Solutions for Your Business</h1>
-            <p className="slide-in-right">Quality shoes at competitive prices for retailers and distributors</p>
-            <Link to="/products" className="btn btn-primary explore-btn slide-in-up">
-              Explore Products
+            {isLoggedIn ? (
+              <h1>Welcome Back, {userName}!<br />Explore Our Latest Products</h1>
+            ) : (
+              <h1>Wholesale Footwear Solutions<br />for Your Business</h1>
+            )}
+            <p>Quality shoes at competitive prices for retailers and distributors</p>
+            <Link to="/products" className="btn btn-primary explore-btn">
+              EXPLORE PRODUCTS
             </Link>
           </div>
         </div>
@@ -137,7 +187,7 @@ function HomePage() {
         <div className="container">
           <h2 className="section-title">Why Choose Us</h2>
           <div className="feature-grid">
-            <div className="feature-card stagger-item hover-lift hover-shadow">
+            <div className="feature-card">
               <div className="feature-icon">
                 <i className="fas fa-box-open"></i>
               </div>
@@ -145,7 +195,7 @@ function HomePage() {
               <p>Order in bulk and enjoy volume discounts on our entire catalog.</p>
             </div>
 
-            <div className="feature-card stagger-item hover-lift hover-shadow">
+            <div className="feature-card">
               <div className="feature-icon">
                 <i className="fas fa-truck"></i>
               </div>
@@ -153,7 +203,7 @@ function HomePage() {
               <p>Quick delivery to your warehouse or store with tracking available.</p>
             </div>
 
-            <div className="feature-card stagger-item hover-lift hover-shadow">
+            <div className="feature-card">
               <div className="feature-icon">
                 <i className="fas fa-medal"></i>
               </div>
@@ -161,7 +211,7 @@ function HomePage() {
               <p>Premium materials and craftsmanship for durable footwear.</p>
             </div>
 
-            <div className="feature-card stagger-item hover-lift hover-shadow">
+            <div className="feature-card">
               <div className="feature-icon">
                 <i className="fas fa-headset"></i>
               </div>
@@ -174,18 +224,19 @@ function HomePage() {
 
       <section className="featured-products-section">
         <div className="container">
-          <div style={{ textAlign: 'left' }}>
-            <h2 className="section-title">Featured Products</h2>
-          </div>
+          <h2 className="section-title">Featured Products</h2>
           <p className="section-description">
             Explore our most popular wholesale footwear options
           </p>
 
-          <div className="product-grid" id="featuredProductsGrid">
+          <div className="category-grid" id="featuredProductsGrid">
             {loading ? (
               // Show skeleton loading state
               Array.from({ length: 4 }).map((_, index) => (
-                <div key={index} className="product-card skeleton"></div>
+                <div key={index} className="category-card skeleton">
+                  <div className="category-image skeleton"></div>
+                  <h3 className="skeleton-text"></h3>
+                </div>
               ))
             ) : error ? (
               // Show error message
@@ -193,7 +244,29 @@ function HomePage() {
             ) : featuredProducts.length > 0 ? (
               // Show featured products
               featuredProducts.map(product => (
-                <ProductCard key={product.id} product={product} />
+                <Link
+                  key={product.id}
+                  to={`/products/${product.id}`}
+                  className="category-card"
+                >
+                  <div className="category-image">
+                    <img
+                      src={getProductImagePath(product.name)}
+                      alt={product.name}
+                      onError={(e) => {
+                        console.log('Product image failed to load:', e.target.src);
+                        e.target.onerror = null;
+                        e.target.src = getProductImagePath('Urban Combat');
+                      }}
+                      loading="lazy"
+                    />
+                  </div>
+                  <h3>{product.name}</h3>
+                  <div className="product-price">
+                    <span className="price-label">Wholesale Price:</span>
+                    <span className="price-value">${product.price.toFixed(2)}</span>
+                  </div>
+                </Link>
               ))
             ) : (
               // No products found
@@ -204,7 +277,7 @@ function HomePage() {
           </div>
 
           <div className="view-all-container">
-            <Link to="/products" className="btn btn-secondary">
+            <Link to="/products" className="btn btn-outline">
               View All Products
             </Link>
           </div>
@@ -225,13 +298,14 @@ function HomePage() {
                 >
                   <div className="category-image">
                     <img
-                      src={category.image || `/images/${category.name.toLowerCase()}.jpg`}
+                      src={category.image || getCategoryImagePath(category.name)}
                       alt={`${category.name} Shoes`}
                       onError={(e) => {
-                        // Fallback image if the category image fails to load
+                        console.log('Category image failed to load:', e.target.src);
                         e.target.onerror = null;
-                        e.target.src = 'https://via.placeholder.com/300x200/1a2238/ffffff?text=Category';
+                        e.target.src = getCategoryImagePath('Casual');
                       }}
+                      loading="lazy"
                     />
                   </div>
                   <h3>{category.name}</h3>
