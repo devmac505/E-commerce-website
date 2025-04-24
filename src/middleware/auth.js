@@ -26,21 +26,31 @@ const protect = async (req, res, next) => {
 
     try {
       // Verify token
+      console.log('Verifying JWT token');
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      console.log('Token verified successfully, decoded ID:', decoded.id);
 
       // Attach user to request
       req.user = await User.findById(decoded.id).select('-password');
 
       if (!req.user) {
+        console.error('User not found for ID:', decoded.id);
         const error = new Error('User not found');
         error.statusCode = 401;
         throw error;
       }
 
+      console.log('User found and attached to request:', { id: req.user._id, role: req.user.role });
       next();
     } catch (err) {
-      const error = new Error('Not authorized to access this route');
+      console.error('JWT verification error:', err.message);
+      console.error('JWT verification error type:', err.name);
+      console.error('Token being verified:', token.substring(0, 10) + '...');
+
+      // Pass the original error for better debugging
+      const error = new Error(`Authentication error: ${err.message}`);
       error.statusCode = 401;
+      error.originalError = err;
       throw error;
     }
   } catch (error) {

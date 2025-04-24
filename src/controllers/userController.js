@@ -54,10 +54,13 @@ exports.registerUser = async (req, res, next) => {
  */
 exports.loginUser = async (req, res, next) => {
   try {
+    console.log('Login attempt received:', { email: req.body.email });
+
     const { email, password } = req.body;
 
     // Validate email & password
     if (!email || !password) {
+      console.log('Login failed: Missing email or password');
       const error = new Error('Please provide an email and password');
       error.statusCode = 400;
       throw error;
@@ -66,21 +69,28 @@ exports.loginUser = async (req, res, next) => {
     // Check for user
     const user = await User.findOne({ email }).select('+password');
     if (!user) {
+      console.log('Login failed: User not found');
       const error = new Error('Invalid credentials');
       error.statusCode = 401;
       throw error;
     }
+
+    console.log('User found:', { id: user._id, role: user.role });
 
     // Check if password matches
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
+      console.log('Login failed: Password does not match');
       const error = new Error('Invalid credentials');
       error.statusCode = 401;
       throw error;
     }
 
+    console.log('Password matched, generating token');
+
     // Generate token
     const token = user.getSignedJwtToken();
+    console.log('Token generated successfully');
 
     res.status(200).json({
       success: true,
@@ -94,6 +104,8 @@ exports.loginUser = async (req, res, next) => {
       }
     });
   } catch (error) {
+    console.error('Login error:', error.message);
+    console.error('Error stack:', error.stack);
     next(error);
   }
 };
@@ -132,7 +144,7 @@ exports.updateProfile = async (req, res, next) => {
     };
 
     // Remove undefined fields
-    Object.keys(fieldsToUpdate).forEach(key => 
+    Object.keys(fieldsToUpdate).forEach(key =>
       fieldsToUpdate[key] === undefined && delete fieldsToUpdate[key]
     );
 

@@ -47,7 +47,7 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        connectSrc: ["'self'", "http://localhost:4000", "http://localhost:3001", "https://e-commerce-backend-iahp.onrender.com"],
+        connectSrc: ["'self'", "http://localhost:4000", "http://localhost:3001", "https://e-commerce-backend-iahp.onrender.com", "https://e-commerce-website-eosin.onrender.com", "https://wholesale-footwear-ecommerce.onrender.com"],
         imgSrc: ["'self'", "data:", "blob:"],
         scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
         styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
@@ -57,7 +57,7 @@ app.use(
   })
 ); // Set security headers with custom CSP
 app.use(cors({
-  origin: ['http://localhost:3001', 'http://localhost:4000'],
+  origin: ['http://localhost:3001', 'http://localhost:4000', 'https://e-commerce-website-eosin.onrender.com', 'https://wholesale-footwear-ecommerce.onrender.com'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
